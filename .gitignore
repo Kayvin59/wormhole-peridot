@@ -1,0 +1,24 @@
+# Compiler files
+cache/
+out/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Docs
+docs/
+
+# Dotenv file
+.env
+
+# Addresses
+cmdmessages.MD
+/contracts
+/artifacts
+/broadcast
+/cache
+/node_modules
+/out
+
