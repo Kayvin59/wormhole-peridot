@@ -118,10 +118,12 @@ contract FTTSourceBridge is IWormholeReceiver, Ownable {
         require(amount > 0, "FTTSourceBridge: Amount must be greater than zero");
         require(to != address(0), "FTTSourceBridge: Invalid recipient address");
 
+        bytes memory payload = abi.encode(fttContract, amount, to);
+
         wormholeRelayer.sendPayloadToEvm{value: cost}(
             targetChain,
             targetAddress,
-            abi.encode(Message(fttContract, amount, to)),
+            payload,
             0,
             GAS_LIMIT
         );
@@ -145,19 +147,18 @@ contract FTTSourceBridge is IWormholeReceiver, Ownable {
             "Only the Wormhole relayer can call this function"
         );
 
-        // Decode the payload to extract the message
-        Message memory message = abi.decode(payload, (Message));
+        (address fttContract, uint256 amount, address to) = abi.decode(payload, (address, uint256, address));
 
-        require(message.amount > fftAmount[message.fttContract], "FTTSourceBridge: Amount must be greater than fftAmount");
+        require(amount > fftAmount[fttContract], "FTTSourceBridge: Amount must be greater than fftAmount");
 
-        IERC20 token = IERC20(message.fttContract);
+        IERC20 token = IERC20(fttContract);
 
-        require(token.balanceOf(address(this)) >= message.amount, "Insufficient ERC20 balance");
+        require(token.balanceOf(address(this)) >= amount, "Insufficient ERC20 balance");
 
         // Transfer the ERC20 tokens to the recipient
-        bool success = token.transfer(message.to, message.amount);
+        bool success = token.transfer(to, amount);
         require(success, "ERC20 transfer failed");
 
-        emit MessageReceived(message.amount);
+        emit MessageReceived(amount);
     }
 }

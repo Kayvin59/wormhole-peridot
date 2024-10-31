@@ -14,10 +14,10 @@ contract IFOPriceQuoter1 is IWormholeReceiver, Ownable {
     mapping(uint16 => bytes32) public registeredSenders;
     mapping(address => uint256) public blindBoxPrice;
 
-    struct Price {
+    /*struct Price {
         address miniNFT;
         uint256 price;
-    }
+    }*/
 
     event MessageReceived(string message);
 
@@ -83,10 +83,11 @@ contract IFOPriceQuoter1 is IWormholeReceiver, Ownable {
             msg.sender == address(wormholeRelayer),
             "Only the Wormhole relayer can call this function"  
         );
+        
+        (address miniNFT, uint256 price) = abi.decode(payload, (address, uint256));
 
-        Price memory _price = abi.decode(payload, (Price));
-        blindBoxPrice[_price.miniNFT] = _price.price;
-        currentBlindBoxPrice = _price.price;
+        blindBoxPrice[miniNFT] = price;
+        currentBlindBoxPrice = price;
     }
 
     function withdrawETH() public onlyOwner {

@@ -205,10 +205,12 @@ contract PeridotTokenFactory is IPeridotTokenFactory {
        address destinationFactory = destinationFactories[targetChain];
        require(destinationFactory != address(0), "Peridot: DestinationFactory not set for target chain");
 
+       bytes memory payload = abi.encode(newFFTContract, name, symbol);
+
         wormholeRelayer.sendPayloadToEvm{value: cost}(
             targetChain,
             destinationFactory,
-            abi.encode(FFTMessage(name, symbol, newFFTContract)),
+            payload,
             0,
             GAS_LIMIT
         );
@@ -232,6 +234,13 @@ contract PeridotTokenFactory is IPeridotTokenFactory {
 
   function setIFOPriceReceiver(address iFOPriceReceiver_) external onlyFactoryOwner {
     iFOPriceReceiver = IIFOPriceReceiver(iFOPriceReceiver_);
+  }
+
+  function withdrawEther() external onlyFactoryOwner() returns (bool) {
+    uint256 amount = address(this).balance;
+    address dao = msg.sender;
+    payable(dao).transfer(amount);
+    return true;
   }
 
   receive() external payable {}

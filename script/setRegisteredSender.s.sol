@@ -7,9 +7,9 @@ import {FTTSourceBridge} from "../src/wormhole/SourceChainContracts/FTTSourceBri
 import {IFOPriceReceiver1} from "../src/wormhole/SourceChainContracts/IFOPriceReceiver1.sol";
 
 contract SetRegisteredSender is Script {
-    address constant WormholeIFO = 0xffdA707Cdd2AAf2a4c10d84aC9Dd228DEf141AE4;
-    address constant FTTDestinationBridge = 0x5D355488edb187b2b6D6aB145778957b5aA18a65;
-    address constant IFOPriceQuoter = 0x68b9bA193E1901E0400cB3be1dF72Af58A226f68;
+    address constant WormholeIFO = 0xEB3fa52874Ef93262b636c98D1bc0B7b427b41aD;
+    address constant FTTDestinationBridge = 0xd3167fBADd8Eac1b1b60A5adfCF504d15dC56005;
+    address constant IFOPriceQuoter = 0x056B0E9b04D535c82d2442e6030b53208c98cc86;
     uint16 constant targetChain = 10004;
 
     function addressToBytes32(address addr) internal pure returns (bytes32) {
@@ -21,11 +21,11 @@ contract SetRegisteredSender is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // Deploy PeridotSwap with the WormholeRelayer address
-        PeridotMiniNFT peridotMiniNFT = PeridotMiniNFT(payable(0x6EeAac2a256b760615a5164449C3FC0998fEdBb5));
+        PeridotMiniNFT peridotMiniNFT = PeridotMiniNFT(payable(0xC13bE6327f65CA03CFF9dabED84aeDC80E226354));
 
-        FTTSourceBridge fttSourceBridge = FTTSourceBridge(payable(0x1A514e4207DFd15617A8c8aB34A2b6B760eCAD02));
+        FTTSourceBridge fttSourceBridge = FTTSourceBridge(payable(0x1b9469dabA419E2e83BcB0831c0E31fa9B6401F2));
 
-        IFOPriceReceiver1 ifoPriceReceiver1 = IFOPriceReceiver1(payable(0x3141354f70D9519469501A32d59d915fc82D7593));
+        IFOPriceReceiver1 ifoPriceReceiver1 = IFOPriceReceiver1(payable(0x7CFe07cFfB3b9ead5F91E45b1aFd47b8E6B7d7C2));
 
         console.log("Attempting to set PeridotMiniNFT...");
         try peridotMiniNFT.setRegisteredSender(uint16(targetChain), addressToBytes32(WormholeIFO)) {

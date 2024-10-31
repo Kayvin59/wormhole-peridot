@@ -7,7 +7,7 @@ import {PeridotMiniNFT} from "../src/fundraising/PeridotMiniNFT.sol";
 
 contract SetPeridotFactory is Script {
     address constant projectAddress = 0xdE3eC8AB5522796cad2892CBE8736436602152A3;
-    address constant tokenFactory = 0xd03B436C5618715540ba01Bd1EB10243b210EF7f;
+    address constant tokenFactory = 0x6Bd3a2F6b91830E964a5b3906E0DBF92a5A5Cc53;
     bytes32 constant salt = "0x";
     string constant miniNFTBaseUri = "ipfs://bafybeiadtdjbr6nd6ogtbjcy56oh2ymaxhw5djjdrl2zvhgngir2s3dqiq";
     string constant name = "Peridot GoldBar";

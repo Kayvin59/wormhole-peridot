@@ -21,11 +21,6 @@ contract WormholeIFO is Ownable, IWormholeReceiver, ReentrancyGuard {
     mapping(uint16 => bytes32) public registeredSenders;
     mapping(address => address) public miniNFTToFTT;
 
-    struct Message {
-        bool isSaleOpen;
-        address miniNFTAddress;
-    }
-
     event MessageReceived(address indexed sender, uint256 amount);
     event TokensMinted(address indexed user, uint256 amount);
 
@@ -140,10 +135,12 @@ contract WormholeIFO is Ownable, IWormholeReceiver, ReentrancyGuard {
             "Insufficient funds for cross-chain delivery"
         );
 
+        bytes memory payload = abi.encode(amount);
+
         wormholeRelayer.sendPayloadToEvm{value: cost}(
             targetChain,
             targetAddress,
-            abi.encode(amount),
+            payload,
             0,
             GAS_LIMIT
         );
@@ -169,9 +166,9 @@ contract WormholeIFO is Ownable, IWormholeReceiver, ReentrancyGuard {
             "Only the Wormhole relayer can call this function"
         );
 
-        Message memory message = abi.decode(payload, (Message));
+        (bool _isSaleOpen, address miniNFTAddress) = abi.decode(payload, (bool, address));
 
-        isSaleOpen[message.miniNFTAddress] = message.isSaleOpen;
+        isSaleOpen[miniNFTAddress] = _isSaleOpen;
     }
 
     receive() external payable {}

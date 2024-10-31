@@ -5,10 +5,10 @@ import {Script, console} from "../lib/forge-std/src/Script.sol";
 import {PeridotMiniNFT} from "../src/fundraising/PeridotMiniNFT.sol";
 
 contract SetPeridotFactory is Script {
-    address constant fttSender = 0x1A514e4207DFd15617A8c8aB34A2b6B760eCAD02;
-    address constant ifoPriceReceiver = 0x3141354f70D9519469501A32d59d915fc82D7593;
-    address constant peridotMiniNFT = 0x6EeAac2a256b760615a5164449C3FC0998fEdBb5;
-    address constant fftAddress = 0x24d954718A4A7CC661247a64523279D6c92d8d1F;
+    address constant fttSender = 0x1b9469dabA419E2e83BcB0831c0E31fa9B6401F2;
+    address constant ifoPriceReceiver = 0x7CFe07cFfB3b9ead5F91E45b1aFd47b8E6B7d7C2;
+    address constant peridotMiniNFT = 0xC13bE6327f65CA03CFF9dabED84aeDC80E226354;
+    address constant fftAddress = 0x2F09A68A5Ba0Ea74D6140fCFB9cfFF64C982794e;
 
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY_TEST");

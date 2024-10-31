@@ -19,10 +19,10 @@ contract IFOPriceReceiver1 is Ownable {
     mapping(address => uint256) public blindBoxPrice;
     mapping(address => bool) public isMiniNFT;
 
-    struct Price {
+    /*struct Price {
         address miniNFT;
         uint256 price;
-    }
+    }*/
 
     event MessageReceived(string message);
 
@@ -88,10 +88,12 @@ contract IFOPriceReceiver1 is Ownable {
 
         uint256 price = blindBoxPrice[miniNFTAddress];
 
+        bytes memory payload = abi.encode(miniNFTAddress, price);
+
         wormholeRelayer.sendPayloadToEvm{value: cost}(
             targetChain,
             targetAddress,
-            abi.encode(Price(miniNFTAddress, price)),
+            payload,
             0,
             GAS_LIMIT
         );

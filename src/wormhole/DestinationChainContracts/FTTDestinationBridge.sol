@@ -126,10 +126,13 @@ contract FTTDestinationBridge is IWormholeReceiver, Ownable {
         fftAmount[fttContract] += amount;
         sourceChainFTT[fttContract] = fttContract;
 
+        bytes memory payload = abi.encode(fttContract, amount, to);
+        
+
         wormholeRelayer.sendPayloadToEvm{value: cost}(
             targetChain,
             targetAddress,
-            abi.encode(Message(fttContract, amount, to)),
+            payload,
             0,
             GAS_LIMIT
         );
@@ -147,19 +150,18 @@ contract FTTDestinationBridge is IWormholeReceiver, Ownable {
             "Only the Wormhole relayer can call this function"
         );
 
-        // Decode the payload to extract the message
-        Message memory message = abi.decode(payload, (Message));
+        (address fttContract, uint256 amount, address to) = abi.decode(payload, (address, uint256, address));
 
-        require(message.fttContract != address(0), "FTTDestinationBridge: Invalid FTT contract address");
-        require(message.to != address(0), "FTTDestinationBridge: Invalid recipient address");
-        require(message.amount > 0, "FTTDestinationBridge: Amount must be greater than zero");
+        require(fttContract != address(0), "FTTDestinationBridge: Invalid FTT contract address");
+        require(to != address(0), "FTTDestinationBridge: Invalid recipient address");
+        require(amount > 0, "FTTDestinationBridge: Amount must be greater than zero");
 
-        address wrappedFFT = sourceChainFTT[message.fttContract];
+        address wrappedFFT = sourceChainFTT[fttContract];
         require(wrappedFFT != address(0), "FTTDestinationBridge: WrappedFFT does not exist");
 
-        destinationFactory.mintWrappedFFT(message.fttContract, message.to, message.amount);
+        destinationFactory.mintWrappedFFT(fttContract, to, amount);
 
-        emit MessageReceived(message.amount);
+        emit MessageReceived(amount);
     }
 
     receive() external payable {}

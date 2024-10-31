@@ -8,10 +8,10 @@ import {IFOPriceQuoter1} from "../src/wormhole/DestinationChainContracts/IFOPric
 import {WormholeIFO} from "../src/wormhole/DestinationChainContracts/WormholeIFO.sol";
 
 contract SetRegisteredSenderDestination is Script {
-    address constant PeridotMiniNFT = 0x6EeAac2a256b760615a5164449C3FC0998fEdBb5;
-    address constant IFOPriceReceiver1 = 0x3141354f70D9519469501A32d59d915fc82D7593;
-    address constant FTTSourceBridge = 0x1A514e4207DFd15617A8c8aB34A2b6B760eCAD02;
-    address constant PeridotTokenFactory = 0xd03B436C5618715540ba01Bd1EB10243b210EF7f;
+    address constant PeridotMiniNFT = 0xC13bE6327f65CA03CFF9dabED84aeDC80E226354;
+    address constant IFOPriceReceiver1 = 0x7CFe07cFfB3b9ead5F91E45b1aFd47b8E6B7d7C2;
+    address constant FTTSourceBridge = 0x1b9469dabA419E2e83BcB0831c0E31fa9B6401F2;
+    address constant PeridotTokenFactory = 0x6Bd3a2F6b91830E964a5b3906E0DBF92a5A5Cc53;
     uint16 constant targetChain = 10003; //Arbitrum Sepolia
 
     function addressToBytes32(address addr) internal pure returns (bytes32) {
@@ -23,13 +23,13 @@ contract SetRegisteredSenderDestination is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // Interacting with the contracts
-        DestinationChainFactory destinationChainFactory = DestinationChainFactory(payable(0xf8c0247d7Ec25CB3fBE5d5C510f20592006Ef13C));
+        DestinationChainFactory destinationChainFactory = DestinationChainFactory(payable(0x81d5D8CfD800af754BfD163A7c192541e6F60B55));
 
-        IFOPriceQuoter1 ifoPriceQuoter1 = IFOPriceQuoter1(payable(0x68b9bA193E1901E0400cB3be1dF72Af58A226f68));
+        IFOPriceQuoter1 ifoPriceQuoter1 = IFOPriceQuoter1(payable(0x056B0E9b04D535c82d2442e6030b53208c98cc86));
 
-        FTTDestinationBridge fttDestinationBridge = FTTDestinationBridge(payable(0x5D355488edb187b2b6D6aB145778957b5aA18a65));
+        FTTDestinationBridge fttDestinationBridge = FTTDestinationBridge(payable(0xd3167fBADd8Eac1b1b60A5adfCF504d15dC56005));
 
-        WormholeIFO wormholeIFO = WormholeIFO(payable(0xffdA707Cdd2AAf2a4c10d84aC9Dd228DEf141AE4));
+        WormholeIFO wormholeIFO = WormholeIFO(payable(0xEB3fa52874Ef93262b636c98D1bc0B7b427b41aD));
 
         console.log("Attempting to set DestinationChainFactory...");
         try destinationChainFactory.registerSender(uint16(targetChain), addressToBytes32(PeridotTokenFactory)) {

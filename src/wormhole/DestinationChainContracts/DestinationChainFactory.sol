@@ -115,30 +115,29 @@ contract DestinationChainFactory is IWormholeReceiver, Ownable {
         bytes32 sourceAddress,
         uint16 sourceChain,
         bytes32
-    ) public payable isRegisteredSender(sourceChain, sourceAddress) {
+    ) public payable override isRegisteredSender(sourceChain, sourceAddress) {
         require(
             msg.sender == address(wormholeRelayer),
             "DestinationChainFactory: Only the Wormhole relayer can call this function"
         );
 
-        // Decode the payload to extract the message
-        CreateWrappedFFTMessage memory message = abi.decode(payload, (CreateWrappedFFTMessage));
+        (string memory name, string memory symbol, address sourceFFT) = abi.decode(payload, (string, string, address));
 
         // Check if the WrappedFFT already exists
         require(
-            sourceChainFTT[message.sourceFFT] == address(0),
+            sourceChainFTT[sourceFFT] == address(0),
             "DestinationChainFactory: WrappedFFT already exists"
         );
 
         // Deploy the WrappedFFT token
-        address wrappedFFT = _deployWrappedFFT(message.name, message.symbol);
+        address wrappedFFT = _deployWrappedFFT(name, symbol);
 
         require(wrappedFFT != address(0), "DestinationChainFactory: WrappedFFT deployment failed");
 
         // Map the sourceChainID and sourceFFT to the WrappedFFT address
-        sourceChainFTT[message.sourceFFT] = wrappedFFT;
+        sourceChainFTT[sourceFFT] = wrappedFFT;
 
-        emit WrappedFFTCreated(sourceChain, message.sourceFFT, wrappedFFT);
+        emit WrappedFFTCreated(sourceChain, sourceFFT, wrappedFFT);
     }
 
     /**
