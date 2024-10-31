@@ -141,7 +141,7 @@ contract FTTSourceBridge is IWormholeReceiver, Ownable {
         bytes32 sourceAddress,
         uint16 sourceChain,
         bytes32
-    ) public payable isRegisteredSender(sourceChain, sourceAddress) {
+    ) public payable override isRegisteredSender(sourceChain, sourceAddress) {
         require(
             msg.sender == address(wormholeRelayer),
             "Only the Wormhole relayer can call this function"

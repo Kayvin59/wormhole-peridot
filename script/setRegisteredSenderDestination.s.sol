@@ -23,13 +23,13 @@ contract SetRegisteredSenderDestination is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // Interacting with the contracts
-        DestinationChainFactory destinationChainFactory = DestinationChainFactory(payable(0x81d5D8CfD800af754BfD163A7c192541e6F60B55));
+        DestinationChainFactory destinationChainFactory = DestinationChainFactory(payable(0x2f33Fce019DbF76C41d8905c8c4FD38D73504bD0));
 
-        IFOPriceQuoter1 ifoPriceQuoter1 = IFOPriceQuoter1(payable(0x056B0E9b04D535c82d2442e6030b53208c98cc86));
+        IFOPriceQuoter1 ifoPriceQuoter1 = IFOPriceQuoter1(payable(0xAfCad89Cc017aa197Ab774fFc1bb4d59FF4295e9));
 
-        FTTDestinationBridge fttDestinationBridge = FTTDestinationBridge(payable(0xd3167fBADd8Eac1b1b60A5adfCF504d15dC56005));
+        FTTDestinationBridge fttDestinationBridge = FTTDestinationBridge(payable(0x82dF4861401A820478aE1182A809bd12a8052f56));
 
-        WormholeIFO wormholeIFO = WormholeIFO(payable(0xEB3fa52874Ef93262b636c98D1bc0B7b427b41aD));
+        WormholeIFO wormholeIFO = WormholeIFO(payable(0xE1A406aa6c04198D3b919f925A7A523241a4a55B));
 
         console.log("Attempting to set DestinationChainFactory...");
         try destinationChainFactory.registerSender(uint16(targetChain), addressToBytes32(PeridotTokenFactory)) {
@@ -55,6 +55,13 @@ contract SetRegisteredSenderDestination is Script {
         console.log("Attempting to set WormholeIFO...");
         try wormholeIFO.setRegisteredSender(uint16(targetChain), addressToBytes32(PeridotMiniNFT)) {
             console.log("WormholeIFO set successfully:", targetChain, PeridotMiniNFT);
+        } catch Error(string memory reason) {
+            console.log("Failed to set WormholeIFO:", reason);
+        }
+
+        console.log("Attempting to set WormholeIFO...");
+        try wormholeIFO.setIFOPriceQuoter(address(ifoPriceQuoter1)) {
+            console.log("WormholeIFO set successfully:", address(ifoPriceQuoter1));
         } catch Error(string memory reason) {
             console.log("Failed to set WormholeIFO:", reason);
         }

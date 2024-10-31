@@ -7,9 +7,9 @@ import {FTTSourceBridge} from "../src/wormhole/SourceChainContracts/FTTSourceBri
 import {IFOPriceReceiver1} from "../src/wormhole/SourceChainContracts/IFOPriceReceiver1.sol";
 
 contract SetRegisteredSender is Script {
-    address constant WormholeIFO = 0xEB3fa52874Ef93262b636c98D1bc0B7b427b41aD;
-    address constant FTTDestinationBridge = 0xd3167fBADd8Eac1b1b60A5adfCF504d15dC56005;
-    address constant IFOPriceQuoter = 0x056B0E9b04D535c82d2442e6030b53208c98cc86;
+    address constant WormholeIFO = 0xE1A406aa6c04198D3b919f925A7A523241a4a55B;
+    address constant FTTDestinationBridge = 0x82dF4861401A820478aE1182A809bd12a8052f56;
+    address constant IFOPriceQuoter = 0xAfCad89Cc017aa197Ab774fFc1bb4d59FF4295e9;
     uint16 constant targetChain = 10004;
 
     function addressToBytes32(address addr) internal pure returns (bytes32) {

@@ -4,22 +4,18 @@ pragma solidity ^0.8.9;
 import 'wormhole-solidity-sdk/interfaces/IWormholeReceiver.sol';
 import 'wormhole-solidity-sdk/interfaces/IWormholeRelayer.sol';
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "../interface/IWormholeIFO.sol";
 
 contract IFOPriceQuoter1 is IWormholeReceiver, Ownable {
     IWormholeRelayer public wormholeRelayer;
-    address public wormholeIFO;
+    IWormholeIFO public wormholeIFO;
     uint256 constant GAS_LIMIT = 100000;
     uint256 public currentBlindBoxPrice;
 
     mapping(uint16 => bytes32) public registeredSenders;
     mapping(address => uint256) public blindBoxPrice;
 
-    /*struct Price {
-        address miniNFT;
-        uint256 price;
-    }*/
-
-    event MessageReceived(string message);
+    event MessageReceived(address miniNFT, uint256 price);
 
     modifier isRegisteredSender(uint16 sourceChain, bytes32 sourceAddress) {
         require(
@@ -31,7 +27,7 @@ contract IFOPriceQuoter1 is IWormholeReceiver, Ownable {
 
     modifier onlyWormholeIFO() {
         require(
-            msg.sender == wormholeIFO,
+            msg.sender == address(wormholeIFO),
             "Only the Wormhole IFO can call this function"
         );
         _;
@@ -39,7 +35,7 @@ contract IFOPriceQuoter1 is IWormholeReceiver, Ownable {
 
     constructor(address _wormholeRelayer, address _wormholeIFO) Ownable() {
         wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
-        wormholeIFO = _wormholeIFO;
+        wormholeIFO = IWormholeIFO(_wormholeIFO);
     }
 
     function getQuote(address miniNFTAddress) public onlyWormholeIFO returns (uint256) {
@@ -88,6 +84,10 @@ contract IFOPriceQuoter1 is IWormholeReceiver, Ownable {
 
         blindBoxPrice[miniNFT] = price;
         currentBlindBoxPrice = price;
+
+        wormholeIFO.getCurrentBlindBoxPrice(miniNFT);
+
+        emit MessageReceived(miniNFT, price);
     }
 
     function withdrawETH() public onlyOwner {
