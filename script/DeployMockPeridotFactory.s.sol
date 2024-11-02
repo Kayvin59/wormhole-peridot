@@ -5,7 +5,7 @@ import {Script, console} from "../lib/forge-std/src/Script.sol";
 import "../src/fundraising/MockPeridotFactory.sol";
 
 contract DeployPeridotSwap is Script {
-    address constant wormholeRelayer = 0xAd753479354283eEE1b86c9470c84D42f229FF43;
+    address constant wormholeRelayer = 0x7B1bD7a6b4E61c2a123AC6BC2cbfC614437D0470;
     address constant DestinationChainFactory = 0xCe72970948809B917955F40A3DbF19F332561b59;
     uint16 constant targetChain = 10004;
 
