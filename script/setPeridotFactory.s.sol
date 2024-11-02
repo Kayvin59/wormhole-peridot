@@ -6,7 +6,7 @@ import {PeridotTokenFactory} from "../src/fundraising/PeridotTokenFactory.sol";
 
 contract SetPeridotFactory is Script {
     address constant FTTsender = 0x1b9469dabA419E2e83BcB0831c0E31fa9B6401F2;
-    address constant DestinationChainFactory = 0x2f33Fce019DbF76C41d8905c8c4FD38D73504bD0;
+    address constant DestinationChainFactory = 0xCe72970948809B917955F40A3DbF19F332561b59;
     address constant IIFOPriceReceiver = 0x7CFe07cFfB3b9ead5F91E45b1aFd47b8E6B7d7C2;
     uint16 constant targetChain = 10004;
 

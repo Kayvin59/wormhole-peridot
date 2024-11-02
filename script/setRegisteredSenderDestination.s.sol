@@ -23,13 +23,13 @@ contract SetRegisteredSenderDestination is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // Interacting with the contracts
-        DestinationChainFactory destinationChainFactory = DestinationChainFactory(payable(0x2f33Fce019DbF76C41d8905c8c4FD38D73504bD0));
+        DestinationChainFactory destinationChainFactory = DestinationChainFactory(payable(0xCe72970948809B917955F40A3DbF19F332561b59));
 
-        IFOPriceQuoter1 ifoPriceQuoter1 = IFOPriceQuoter1(payable(0xAfCad89Cc017aa197Ab774fFc1bb4d59FF4295e9));
+        IFOPriceQuoter1 ifoPriceQuoter1 = IFOPriceQuoter1(payable(0x4f74a4B2c5F95360d3282Ec7342bbC91877D74e2));
 
-        FTTDestinationBridge fttDestinationBridge = FTTDestinationBridge(payable(0x82dF4861401A820478aE1182A809bd12a8052f56));
+        FTTDestinationBridge fttDestinationBridge = FTTDestinationBridge(payable(0xFd5078F159b451F38E3B0E341770f102eed65A9a));
 
-        WormholeIFO wormholeIFO = WormholeIFO(payable(0xE1A406aa6c04198D3b919f925A7A523241a4a55B));
+        WormholeIFO wormholeIFO = WormholeIFO(payable(0x11cdE31c5F08d4619f883874811F0EaC0abF4fa8));
 
         console.log("Attempting to set DestinationChainFactory...");
         try destinationChainFactory.registerSender(uint16(targetChain), addressToBytes32(PeridotTokenFactory)) {

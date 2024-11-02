@@ -11,7 +11,7 @@ import "./WrappedFTT.sol";
 contract DestinationChainFactory is IWormholeReceiver, Ownable {
     IWormholeRelayer public wormholeRelayer;
 
-    uint256 constant GAS_LIMIT = 100000;
+    uint256 constant GAS_LIMIT = 2000000;
 
     mapping(address => address) public sourceChainFTT;
 
