@@ -1,0 +1,99 @@
+@import "./Input.module.scss";
+
+.select_container {
+	> * {
+		color: var(--text-color-dark);
+	}
+}
+
+.input {
+	cursor: text !important;
+}
+
+.menu_list {
+	background-color: var(--text-color-bright);
+	padding: 10px 0;
+	border-radius: var(--border-radius);
+	border: 1px solid var(--color-1);
+}
+
+.option {
+	padding: 5px 10px;
+	font-size: 17px;
+
+	transition: var(--transition-short);
+	transition-property: background-color, color;
+
+	&:hover {
+		background-color: var(--color-1);
+		color: var(--text-color-bright);
+	}
+}
+
+.value_container {
+	gap: 5px;
+}
+
+.single_value {
+	color: var(--text-color-bright);
+	background-color: var(--color-1);
+	width: fit-content;
+	border-radius: 5px;
+	padding: 0 10px;
+}
+
+.multi_value {
+	width: fit-content;
+	color: var(--text-color-bright);
+	background-color: var(--color-1);
+	border-radius: 5px;
+	padding: 0 5px;
+
+	> div:first-child {
+		padding-left: 5px;
+		padding-right: 10px;
+	}
+
+	> div:last-child {
+		padding-left: 5px;
+		cursor: pointer;
+
+		transition: var(--transition-long);
+		transition-property: opacity;
+
+		&:hover {
+			opacity: var(--opacity-low);
+		}
+
+		> svg {
+			width: 15px;
+			height: 15px;
+		}
+	}
+}
+
+.indicators_container {	
+	> div {
+		transition: var(--transition-long);
+		transition-property: opacity;
+
+		&:hover {
+			opacity: var(--opacity-low);
+		}
+	}
+
+	> div:first-child {
+		cursor: pointer;
+	}
+}
+
+.indicators_container_active {
+	> div:last-child {
+		transform: rotate(180deg);
+	}
+}
+
+.indicator_separator {
+	background-color: var(--color-1);
+	margin: 0 8px;
+}

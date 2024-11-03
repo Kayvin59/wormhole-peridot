@@ -1,0 +1,16 @@
+@use "../../styles/variables";
+
+.main {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: var(--bottom-margin);
+
+	@if variables.$is-header-sticky == "true" {
+		margin-top: calc(var(--header-height) + var(--top-margin));
+	} @else {
+		margin-top: var(--top-margin);
+	}
+}

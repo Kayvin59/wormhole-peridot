@@ -1,0 +1,7 @@
+@use "../../../styles/animations";
+
+.container {
+	display: flex;
+	justify-content: center;
+	animation: fade var(--animation);
+}

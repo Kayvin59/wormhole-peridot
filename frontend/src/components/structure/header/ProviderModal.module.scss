@@ -1,0 +1,63 @@
+@use "../../../styles/animations";
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+.container {
+	@include mixins.box;
+	@include mixins.middle;
+
+	width: 100%;
+	max-width: 320px;
+	z-index: variables.$z-index-modal;
+	animation: fade var(--animation);
+	background: var(--color-1);
+
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.provider_button {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	padding: var(--padding-small);
+	color: var(--text-color-bright);
+	background-color: var(--button-color);
+	font-size: 20px;
+	border: var(--button-border);
+	border-radius: var(--button-border-radius);
+
+	transition: var(--transition-short);
+	transition-property: background-color;
+
+	&:hover:enabled {
+		background-color: var(--color-3);
+	}
+
+	> div:first-child {
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+		align-items: center;
+	}
+}
+
+.provider_circle {
+	width: 12px;
+	height: 12px;
+	border-radius: var(--border-radius);
+	border: var(--button-border);
+
+	background-color: var(--provider-button-negative-color);
+}
+
+.provider_circle_active {
+	background-color: var(--provider-button-positive-color);
+}
+
+.provider_image {
+	width: 30px;
+	height: 30px;
+}

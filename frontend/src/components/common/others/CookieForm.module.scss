@@ -1,0 +1,71 @@
+@use "../../../styles/animations";
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+.container {
+	@include mixins.side_padding;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	z-index: variables.$z-index-cookie-form;
+	background-color: var(--header-color);
+	padding-top: 20px;
+	padding-bottom: 20px;
+	animation: fade var(--animation);
+	border-top: var(--border);
+
+	@media screen and (max-width: variables.$mobile-breakpoint-medium) {
+		flex-direction: column;
+		gap: 40px;
+	}
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		height: auto;
+	}
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 3px;
+	align-items: flex-start;
+	color: var(--text-color-bright);
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		gap: 20px;
+	}
+}
+
+.button_wrapper {
+	display: flex;
+	flex-direction: row;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-medium) {
+		flex-direction: column;
+	}
+}
+
+.button {
+	cursor: pointer;
+	border: none;
+	font-size: 18px;
+	padding: 10px 30px;
+	border-radius: var(--border-radius);
+	border: 1px solid var(--color-2);
+	color: var(--text-color-bright);
+	background-color: var(--button-color);
+
+	transition: var(--transition-short);
+	transition-property: opacity;
+
+	&:hover:enabled {
+		opacity: var(--opacity-high);
+	}
+}

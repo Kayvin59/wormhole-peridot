@@ -1,0 +1,43 @@
+@use "./variables";
+
+@mixin box {
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow-small);
+	padding: var(--padding-big);
+	background: var(--color-3);
+	border: 1px solid var(--color-5);
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		padding: var(--padding-small);
+	}
+}
+
+@mixin middle {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin side_padding {
+	padding-left: var(--side-padding-big);
+	padding-right: var(--side-padding-big);
+	
+	@media screen and (max-width: variables.$mobile-breakpoint-very-big) {
+		padding-left: var(--side-padding-medium);
+		padding-right: var(--side-padding-medium);
+	}
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		padding-left: var(--side-padding-small);
+		padding-right: var(--side-padding-small);
+	}
+}
+
+@mixin special_button {
+	cursor: pointer;
+	padding: var(--input-padding);
+	font-size: 14px;
+	border-radius: var(--button-border-radius);
+	border: none;
+}

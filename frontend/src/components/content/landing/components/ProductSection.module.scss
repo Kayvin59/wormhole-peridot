@@ -1,0 +1,26 @@
+@use "../../../../styles/mixins";
+@use "../../../../styles/variables";
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 70px;
+
+	max-width: 1000px;
+	font-size: 28px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-medium) {
+		font-size: 14px;
+	}
+}
+
+.text_container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.highlight {
+	color: var(--color-4);
+	text-shadow: 3px 3px black;
+}

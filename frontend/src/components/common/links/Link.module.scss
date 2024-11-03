@@ -1,0 +1,36 @@
+@import "../buttons/Button.module.scss";
+
+.link {
+	transition: var(--transition-long);
+	transition-property: color, background-color, text-decoration;
+
+	&:link, &:visited {
+		color: var(--link-color);
+		background-color: transparent;
+		text-decoration: none;
+	}
+
+	&:hover, &:active {
+		color: var(--link-highlight-color);
+		background-color: transparent;
+		text-decoration: underline;
+	}
+}
+
+.link_button {
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font-family: var(--title-font);
+
+	transition: var(--transition-short);
+	transition-property: opacity;
+
+	&:hover {
+		opacity: var(--opacity-high);
+	}
+}
+
+.link_unstyled {
+	all: inherit;
+}

@@ -1,0 +1,18 @@
+@import "../buttons/Button.module.scss";
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	width: 100%;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.sub_label {
+	font-size: 10px;
+}

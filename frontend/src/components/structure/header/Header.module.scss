@@ -1,0 +1,121 @@
+@use "../../../styles/animations";
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+// ---- HEADER ----
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	background-color: var(--header-color);
+	overflow: hidden;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	height: var(--header-height);
+	border-bottom: 3px solid var(--color-2);
+
+	padding-left: 20px;
+	padding-right: 20px;
+
+	@if variables.$is-header-sticky == "true" {
+		position: fixed;
+		top: 0;
+		z-index: variables.$z-index-sticky-header;
+		width: 100%;
+	}
+}
+
+// ---- LOGO ----
+
+.logo_container {
+	width: 270px;
+	align-self: center;
+}
+
+// ---- NAV ----
+
+.nav_desktop {
+	display: flex;
+	flex-direction: row;
+	gap: 25px;
+	align-self: center;
+
+	@if variables.$is-header-sticky == "true" {
+		align-items: center;
+	}
+}
+
+.nav_mobile {
+	@include mixins.box;
+	@include mixins.middle;
+
+	list-style: none;
+	text-align: center;
+	flex-direction: column;
+	gap: 20px;
+	display: none;
+	z-index: variables.$z-index-nav-mobile;
+	border-radius: var(--border-radius);
+	background-color: var(--header-color);
+	animation: fade var(--animation);
+}
+
+.nav_mobile_visible {
+	display: flex;
+}
+
+// ---- LINK ----
+
+.link {
+	color: var(--text-color-bright);
+	line-height: 1em;
+	padding: 10px;
+	text-decoration: none;
+	border-radius: var(--border-radius);
+	font-size: 18px;
+	border: none;
+	background-color: var(--header-link-color);
+	border: 1px solid var(--text-color-bright);
+	text-align: center;
+	cursor: pointer;
+
+	transition: var(--transition-long);
+	transition-property: background-color;
+
+	&:hover {
+		transition: var(--transition-long);
+		transition-property: background-color;
+
+		color: var(--text-color-dark);
+		background-color: var(--header-link-highlight-color);
+	}
+}
+
+.link_desktop {
+	width: 150px;
+}
+
+.link_mobile {
+	width: 100%;
+}
+
+.link_transparent {
+	background-color: transparent;
+}
+
+.link_active {
+	color: var(--text-color-dark);
+	background-color: var(--header-link-highlight-color);
+}
+
+// ---- FUNCTIONS ----
+
+.function_container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	width: 270px;
+}

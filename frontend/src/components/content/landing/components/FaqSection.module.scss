@@ -1,0 +1,21 @@
+@use "../../../../styles/animations";
+@use "../../../../styles/variables";
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	gap: 10px;
+
+	max-width: 1000px;
+	min-width: 800px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		width: 90%;
+		min-width: initial;
+	}
+
+	@media screen and (max-width: variables.$mobile-breakpoint-medium) {
+		width: 100%;
+	}
+}

@@ -1,0 +1,180 @@
+@use "./styles/variables";
+
+// ---- FONTS ----
+
+@font-face {
+	font-family: "Poppins Regular";
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+	src: local("Poppins Regular"), url("./fonts/Poppins-Regular.ttf") format("woff");
+}
+
+@font-face {
+	font-family: "Roboto Regular";
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+	src: local("Roboto Regular"), url("./fonts/Roboto-Regular.ttf") format("woff");
+}
+
+// ---- VARIABLES ----
+
+:root {
+	--mobile-breakpoint-very-big: #{variables.$mobile-breakpoint-very-big};
+	--mobile-breakpoint-big: #{variables.$mobile-breakpoint-big};
+	--mobile-breakpoint-medium: #{variables.$mobile-breakpoint-medium};
+	--mobile-breakpoint-small: #{variables.$mobile-breakpoint-small};
+	--mobile-breakpoint-very-small: #{variables.$mobile-breakpoint-very-small};
+
+	--side-padding-big: 250px;
+	--side-padding-medium: 25px;
+	--side-padding-small: 15px;
+	
+	--top-margin: 100px;
+	--bottom-margin: 160px;
+	--header-height: 80px;
+	--footer-height: 80px;
+	
+	--section-gap-small: 50px;
+	--section-gap-big: 200px;
+	
+	--scroll-margin: 20px;
+
+	--color-1: #1a1a1a;
+	--color-2: #ffffff;
+	--color-3: #313241;
+	--color-4: #fced2f;
+	--color-5: #ffffff66;
+
+	--text-color-bright: #ffffff;
+	--text-color-dark: #000000;
+
+	--header-color: var(--color-1);
+	--footer-color: var(--color-1);
+
+	--input-color: #ffffff;
+	--input-padding: 10px;
+	--input-border: none;
+	--input-height: 50px;
+
+	--button-color: var(--color-1);
+	--button-border: 2px solid var(--color-2);
+	--button-border-radius: 8px;
+
+	--checkbox-positive-color: #000000;
+	--checkbox-positive-highlight-color: #000000;
+	--checkbox-negative-color: #000000;
+	--checkbox-negative-highlight-color: #000000;
+
+	--radio-color: var(--color-1);
+	--radio-border-color: var(--color-1);
+
+	--link-color: var(--color-2);
+	--link-highlight-color: var(--color-4);
+
+	--header-link-color: var(--color-1);
+	--header-link-highlight-color: var(--color-2);
+	--header-link-container: var(--color-1);
+
+	--provider-button-positive-color: #005f06;
+	--provider-button-negative-color: #5f0000;
+
+	--connect-button-color: var(--color-4);
+	
+	--padding-big: 30px;
+	--padding-small: 15px;
+
+	--border: 3px solid var(--color-2);
+	--border-radius: 15px;
+
+	--box-shadow-small: 0px 0px 15px rgba(0, 0, 0, 0.3);
+	--box-shadow-big: 0px 0px 10px 4px rgb(0 0 0 / 30%);
+
+	--animation: 0.5s ease;
+
+	--transition-long: all 400ms ease;
+	--transition-short: all 200ms ease;
+
+	--opacity-low: 0.4;
+	--opacity-high: 0.8;
+
+	--title-font: Poppins Regular;
+	--text-font: Roboto Regular;
+
+	--landing-element-color-1: var(--color-1);
+	--landing-element-color-hover: var(--color-3);
+}
+
+// ---- GENERAL ----
+
+html {
+	height: 100%;
+}
+
+body {
+	font-family: var(--title-font);
+	color: var(--text-color-bright);
+	background-color: var(--color-1);
+}
+
+h1, h2, button, nav > * {
+	font-family: var(--title-font);
+}
+
+hr {
+	border: none;
+	border-top: 1px solid var(--color-3);
+	width: 100%;
+}
+
+* {
+	font-family: inherit;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+// ---- INPUTS ----
+
+input, textarea, button {
+	background-color: inherit;
+	color: inherit;
+}
+
+button {
+	cursor: pointer;
+}
+
+button:disabled {
+	cursor: not-allowed;
+	opacity: var(--opacity-high);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
+// ---- SCROLLBAR ----
+
+::-webkit-scrollbar {
+	width: 3px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: var(--color-1);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--color-2);
+
+	&:hover {
+		background-color: var(--color-2);
+	}
+}

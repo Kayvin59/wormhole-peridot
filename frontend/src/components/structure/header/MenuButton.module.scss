@@ -1,0 +1,65 @@
+@use "../../../styles/variables";
+
+.menu_button_container {
+	width: 50px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	
+	user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.menu_button {
+	display: flex;
+	height: 100%;
+	width: 50px;
+	cursor: pointer;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: variables.$z-index-menu-button;
+	margin-right: -10px;
+}
+
+.menu_checkbox {
+	display: none;
+}
+
+.menu_button_part,
+.menu_button_part::before,
+.menu_button_part::after {
+	display: block;
+	background-color: var(--text-color-bright);
+	position: absolute;
+	height: 4px;
+	width: 30px;
+	transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+	border-radius: 2px;
+}
+
+.menu_button_part::before {
+	content: "";
+	margin-top: -8px;
+}
+
+.menu_button_part::after {
+	content: "";
+	margin-top: 8px;
+}
+
+.menu_checkbox:checked + .menu_button .menu_button_part::before {
+	margin-top: 0px;
+	transform: rotate(405deg);
+}
+
+.menu_checkbox:checked + .menu_button .menu_button_part {
+	background: rgba(255, 255, 255, 0);
+}
+
+.menu_checkbox:checked + .menu_button .menu_button_part::after {
+	margin-top: 0px;
+	transform: rotate(-405deg);
+}

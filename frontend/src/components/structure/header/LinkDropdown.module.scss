@@ -1,0 +1,36 @@
+@use "../../../styles/animations";
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+.title {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+}
+
+.title_active {
+	background-color: var(--header-link-color);
+	color: var(--text-color-bright);
+
+	transition: var(--transition-long);
+	transition-property: background-color, color;
+}
+
+.link_container {
+	@include mixins.box;
+
+	@if variables.$is-header-sticky == "true" {
+		position: fixed;
+	} @else {
+		position: absolute;
+	}
+
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	z-index: variables.$z-index-link-dropdown;
+	padding: var(--padding-small);
+	background-color: var(--header-link-container);
+	animation: fade var(--animation);
+}

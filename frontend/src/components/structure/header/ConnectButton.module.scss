@@ -1,0 +1,31 @@
+.connect_button {
+	display: flex;
+	flex-direction: row;
+	gap: 3px;
+	justify-content: center;
+	align-items: center;
+
+	text-align: center;
+	margin-right: 110px;
+	width: 160px;
+	border: none;
+	line-height: 1em;
+	padding: 10px;
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	font-size: 15px;
+	background-color: var(--connect-button-color);
+	color: var(--text-color-dark);
+
+	transition: var(--transition-short);
+	transition-property: opacity;
+	
+	&:hover:enabled {
+		opacity: var(--opacity-high);
+	}
+}
+
+.provider_image {
+	width: 15px;
+	height: 15px;
+}

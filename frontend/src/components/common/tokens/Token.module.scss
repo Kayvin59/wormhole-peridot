@@ -1,0 +1,28 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+}
+
+.text_container {
+	display: flex;
+	flex-direction: column;
+}
+
+.name {
+	font-size: 18px;
+	line-height: 1;
+}
+
+.chain_container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 3px;
+}
+
+.chain {
+	font-size: 7px;
+}

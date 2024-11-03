@@ -1,0 +1,203 @@
+@use "../../../../styles/mixins";
+@use "../../../../styles/variables";
+
+// ---- CONTAINER ----
+
+.container {
+	display: flex;
+	flex-direction: column;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		width: 100%;
+	}
+}
+
+.container_dummy_container {
+	display: flex;
+	align-self: center;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		align-self: auto;
+	}
+}
+
+.container_dummy {
+	display: none;
+
+	width: 463.5px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		display: block;
+	}
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		width: 100%;
+	}
+}
+
+.container_top {
+	height: 70px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		margin-right: 28.5px;
+	}
+}
+
+.container_bottom {
+	height: 70px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		margin-right: 28.5px;
+	}
+}	
+
+// ---- ROW ----
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+// ---- BUBBLE ----
+
+.bubble {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	
+	width: 400px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		width: 100%;
+	}
+}
+
+.bubble_title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+
+	font-size: 26px;
+}
+
+.bubble_content_container {
+	@include mixins.box;
+
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+	font-size: 22px;
+	background-color: var(--landing-element-color-1);
+
+	transition: var(--transition-long);
+	transition-property: background-color;
+
+	&:hover {
+		background-color: var(--landing-element-color-hover);
+
+		transition: var(--transition-long);
+		transition-property: background-color;
+	}
+
+	> p {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+	}
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		margin-bottom: 150px;
+	}
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		font-size: 16px;
+	}
+}
+
+.bubble_check {
+	background-color: var(--landing-element-color-hover);
+	border: 3px solid var(--landing-element-color-1);
+}
+
+.bubble_dummy {
+	width: 400px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		display: none;
+	}
+}
+
+// ---- BAR ----
+
+.bar {
+	background-color: var(--landing-element-color-1);
+	width: 3px;
+}
+
+.bar_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.bar_top {
+	height: 100px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		height: 80px;
+	}
+}
+
+.bar_circle_container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.bar_circle_connector {
+	width: 50px;
+	height: 5px;
+
+	background-color: var(--landing-element-color-1);
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		width: 15px;
+	}
+}
+
+.bar_circle {
+	width: 30px;
+	height: 30px;
+
+	border: 3px solid var(--landing-element-color-1);
+	background-color: var(--landing-element-color-1);
+	border-radius: 50%;
+}
+
+.bar_circle_dummy {
+	width: 50px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		width: 15px;
+	}
+}
+
+.bar_bottom {
+	height: 100%;
+}
+
+// ---- HELPER ----
+
+.reverse {
+	flex-direction: row-reverse;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		flex-direction: row;
+	}
+}

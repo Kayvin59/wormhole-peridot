@@ -1,0 +1,27 @@
+.button {
+	cursor: pointer;
+	border: none;
+	padding: var(--input-padding);
+	background-color: var(--button-color);
+	color: var(--text-color-bright);
+	border-radius: var(--button-border-radius);
+	font-weight: bold;
+	font-size: 18px;
+	box-shadow: var(--box-shadow-small);
+
+	transition: var(--transition-short);
+	transition-property: opacity;
+
+	&:hover:enabled {
+		opacity: 0.6;
+	}
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+}
+
+.wide {
+	width: 100%;
+}

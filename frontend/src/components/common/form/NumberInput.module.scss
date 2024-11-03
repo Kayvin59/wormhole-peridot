@@ -1,0 +1,63 @@
+@import "./Input.module.scss";
+
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-end;
+	
+	border-top-left-radius: var(--border-radius);
+	border-bottom-left-radius: var(--border-radius);
+}
+
+.input_with_max {
+	border-right: none;
+
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.max_button_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	height: var(--input-height);
+	background-color: var(--input-color);
+	padding: 5px;
+
+	border-top-right-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
+
+	border: var(--input-border);
+	border-left: none;
+}
+
+.max_button_container_disabled {
+	opacity: var(--opacity-low);
+}
+
+.max_button {
+	background-color: var(--color-1);
+	color: var(--text-color-bright);
+	padding: 5px 10px;
+	height: fit-content;
+
+	border-radius: var(--border-radius);
+	border: none;
+
+	transition: var(--transition-short);
+	transition-property: opacity;
+
+	&:hover:enabled {
+		transition: var(--transition-short);
+		transition-property: opacity;
+
+		opacity: var(--opacity-high);
+	}
+
+	&:disabled {
+		opacity: 1;
+	}
+}

@@ -1,0 +1,35 @@
+@use "../../../styles/animations";
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+.title {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+}
+
+.title_active {
+	background-color: var(--color-1);
+	color: var(--text-color-bright);
+
+	transition: var(--transition-long);
+	transition-property: background-color, color;
+}
+
+.element_container {
+	@include mixins.box;
+
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	z-index: variables.$z-index-link-dropdown;
+	padding: var(--padding-small);
+	background-color: var(--header-link-container);
+	animation: fade var(--animation);
+	position: absolute;
+}
+
+.sort_arrow_up {
+	margin-bottom: 5px;
+}

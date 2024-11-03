@@ -1,0 +1,23 @@
+@use "../../styles/mixins";
+@use "../../styles/variables";
+
+.container {
+	@include mixins.side_padding;
+
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	text-align: center;
+	gap: var(--section-gap-small);
+	width: 100%;
+
+	@if variables.$is-header-sticky == "true" {
+		min-height: calc(100vh - (var(--header-height) + var(--footer-height) + var(--bottom-margin)));
+	} @else {
+		min-height: calc(100vh - (var(--header-height) + var(--footer-height) + var(--top-margin) + var(--bottom-margin)));
+	}
+}
+
+.big_gap {
+	gap: var(--section-gap-big);
+}

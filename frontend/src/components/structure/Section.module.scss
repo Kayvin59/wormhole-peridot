@@ -1,0 +1,47 @@
+@use "../../styles/variables";
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+
+	@if variables.$is-header-sticky == "true" {
+		scroll-margin-top: calc(var(--header-height) + var(--scroll-margin));
+	} @else {
+		scroll-margin-top: var(--scroll-margin);
+	}
+}
+
+.inner_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+
+.title {
+	width: fit-content;
+	align-self: center;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+
+	transition: var(--transition-short);
+	transition-property: opacity;
+}
+
+.title_big {
+	font-size: 50px;
+
+	@media screen and (max-width: variables.$mobile-breakpoint-small) {
+		font-size: 40px;
+	}
+}
+
+.anchor_title {
+	cursor: pointer;
+
+	&:hover {
+		opacity: var(--opacity-high);
+	}
+}

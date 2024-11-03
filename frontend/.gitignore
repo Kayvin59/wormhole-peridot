@@ -1,0 +1,15 @@
+# ide
+.vscode
+.idea
+
+# dependencies
+/node_modules
+
+# production
+/build
+/nginx_build
+/cert
+/deploy/passwd
+
+# env
+.env

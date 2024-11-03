@@ -1,0 +1,6 @@
+@use "../../../styles/variables";
+
+.container {
+	cursor: pointer;
+	z-index: variables.$z-index-text-tooltip;
+}

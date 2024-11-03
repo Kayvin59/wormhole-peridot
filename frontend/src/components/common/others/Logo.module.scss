@@ -1,0 +1,45 @@
+@use "../../../styles/variables";
+
+.logo {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 3px;
+
+	text-decoration: none;
+	color: var(--text-color-bright);
+	border: none;
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	align-self: center;
+	
+	user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.logo_image {
+	width: 30px;
+	height: fit-content;
+}
+
+.logo_text {
+	font-family: var(--title-font);
+	font-size: 25px;
+	vertical-align: middle;
+	font-weight: bold;
+
+	transition: var(--transition-long);
+	transition-property: box-shadow;
+
+	&:hover {
+		box-shadow: inset 0px 0px 20px 20px rgb(255 255 255 / 10%), 0px 0px 20px 15px rgb(255 255 255 / 10%);
+
+		transition: var(--transition-long);
+		transition-property: box-shadow;
+
+		@media screen and (max-width: variables.$mobile-breakpoint-very-small) {
+			box-shadow: none;
+		}
+	}
+}

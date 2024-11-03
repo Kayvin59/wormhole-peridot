@@ -1,0 +1,23 @@
+@use "../../../../styles/variables";
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	gap: 20px;
+
+	> div {
+		display: flex;
+		flex-direction: row;
+		align-self: center;
+		gap: 20px;
+
+		@media screen and (max-width: variables.$mobile-breakpoint-big) {
+			flex-direction: column;
+		}
+	}
+
+	@media screen and (max-width: variables.$mobile-breakpoint-big) {
+		flex-direction: column;
+	}
+}

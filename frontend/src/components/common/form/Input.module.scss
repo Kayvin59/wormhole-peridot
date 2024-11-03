@@ -1,0 +1,40 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	width: 100%;
+}
+
+.input {
+	font-size: 20px;
+	border-radius: var(--border-radius);
+	box-sizing: border-box;
+	background-color: var(--input-color);
+	color: var(--text-color-dark);
+	padding: var(--input-padding);
+	border: var(--input-border);
+	width: 100%;
+	height: var(--input-height);
+
+	&:focus {
+		outline: none;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
+
+.input_disabled {
+	opacity: var(--opacity-low);
+	cursor: not-allowed;
+}
+
+.label {
+	font-size: 12px;
+	padding-left: 10px;
+}
+
+.sub_label {
+	font-size: 10px;
+}

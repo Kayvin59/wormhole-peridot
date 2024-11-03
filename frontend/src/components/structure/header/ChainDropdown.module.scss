@@ -1,0 +1,104 @@
+@use "../../../styles/animations";
+@use "../../../styles/variables";
+
+.container {
+	@if variables.$is-header-sticky == "true" {
+		position: fixed;
+	} @else {
+		position: absolute;
+	}
+}
+
+// ---- DROPDOWN TOGGLE ----
+
+.dropdown_button {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding: 10px;
+	height: 35px;
+	width: 100px;
+	border-radius: var(--border-radius);
+	font-size: 15px;
+	border: none;
+	outline: 0;
+	color: var(--text-color-bright);
+	line-height: 1em;
+
+	transition: var(--transition-long);
+	transition-property: background-color;
+
+	&:hover {
+		background-color: var(--header-link-highlight-color);
+		color: var(--text-color-dark);
+	}
+}
+
+.dropdown_button_active {
+	background-color: var(--header-link-highlight-color);
+	color: var(--text-color-dark);
+}
+
+// ---- CHAIN BUTTONS ----
+
+.chain_button_container {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	animation: fade var(--animation);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow-small);
+	text-align: left;
+	background-color: var(--header-link-container);
+	padding: var(--padding-small);
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	z-index: variables.$z-index-chain-dropdown;
+}
+
+.chain_button {
+	align-items: center;
+	border: none;
+	background-color: var(--header-link-container);
+	color: var(--text-color-bright);
+	line-height: 1em;
+	padding: 10px;
+	border-radius: var(--border-radius);
+	font-size: 12px;
+	width: 100%;
+	text-align: left;
+
+	transition: var(--transition-long);
+	transition-property: background-color, color;
+
+	&:hover:enabled, &:disabled  {
+		color: var(--text-color-dark);
+		background-color: var(--header-link-highlight-color);
+	}
+}
+
+.chain_image_container {
+	display: flex;
+	flex-direction: row;
+	gap: 3px;
+}
+
+.chain_image {
+	width: 15px;
+	height: 15px;
+	animation: fade var(--animation);
+}
+
+// ---- SORT ARROW ----
+
+.sort_arrow_up {
+	margin-top: 2px;
+}
+
+.sort_arrow_down {
+	margin-top: -2px;
+}

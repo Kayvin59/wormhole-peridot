@@ -1,0 +1,22 @@
+@use "../../../styles/mixins";
+
+.button {
+	@include mixins.special_button;
+
+	background-color: var(--checkbox-negative-color);
+
+	transition: var(--transition-short);
+	transition-property: background-color;
+
+	&:hover:enabled, &:disabled {
+		background-color: var(--checkbox-negative-highlight-color);
+	}
+}
+
+.checked {
+	background-color: var(--checkbox-positive-color);
+
+	&:hover:enabled, &:disabled {
+		background-color: var(--checkbox-positive-highlight-color);
+	}
+}

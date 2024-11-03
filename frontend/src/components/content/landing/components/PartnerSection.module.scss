@@ -1,0 +1,29 @@
+@use "../../../../styles/mixins";
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.element {
+	@include mixins.box;
+	
+	cursor: pointer;
+	background-color: var(--landing-element-color-1);
+	width: 300px;
+
+	transition: var(--transition-long);
+	transition-property: background-color;
+
+	&:hover {
+		background-color: var(--landing-element-color-hover);
+
+		transition: var(--transition-long);
+		transition-property: background-color;
+	}
+}
+
+.image {
+	width: 100%;
+}
