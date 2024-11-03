@@ -4,6 +4,10 @@
 
 This repository contains the Peridot Wormhole contracts.
 
+# Note
+
+We have simulated and tested the transactions as thoroughly as we can in a simulated environment. Eventho the contracts have all worked in our simulation (thanks tenderly) the actual Wormhole Relayer is rather picky as we have experienced. It can be that the contracts therefore weirdly enough don't receive the messages. We have had several hours texting and talking to Wormhole Teammembers to figure out this isssue, up until the Submission Date. We want to thank you for your time and patience and we hope that we can solve these issues also after the hackathon together.
+
 ## Explanation
 
 The Peridot Wormhole contracts are responsible for sending and receiving FFTs across chains from the source chain Ethereum to other chains. It is also possible to participate in the IFO on Ethereum from other chains while the IFO runs.
@@ -24,7 +28,7 @@ Don't forget to set your env & the proper contract addresses in the deployment s
 
 Deploy `DeployPeridotComplete.s.sol -> WormholeDeployDestination.s.sol -> setPeridotFactory.s.sol -> createCollection.s.sol -> setMiniNFT.s.sol -> setRegisteredSender.s.sol -> setRegisteredSenderDestination.s.sol`
 
-On the Mini NFT Contract, you can `startNewRound` and later `closeRound` if the round is done. The mini NFT has to `sendMessage` to the `WormholeIFO` contracts after a round has started to communicate to te other chains, the price and which FTT belongs to the Mini NFT.
+On the Mini NFT Contract, you can `startNewRound` and later `closeRound` if the round is done. The mini NFT has to `sendMessage` to the `WormholeIFO` contracts before and after a round has started to communicate to te other chains hat IFO has opened/closed and which FTT belongs to the Mini NFT. The `IFOPriceReceiver1` also has to send a message to the `IFOPriceQuoter1`, after the message came in the `IFOPriceQuoter1`, the `WormholeIFO` contract has to call the `getCurrentBlindBoxPrice` function to receive the proper price.
 
 ## New Contracts
 
