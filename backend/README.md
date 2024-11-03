@@ -12,11 +12,7 @@ These contracts also allow for users to bridge their ERC20 Fractions to other ch
 
 ## Testing Instructions
 
-### Use deployed Contracts.
-
-The deployed Contracts on the Source Chain are on Arbitrum Sepolia and for the Destination Chain on Base Sepolia.
-
-You can access the contracts either through the Frontend(https://peridot.finance) or directly via the smart contracts which are listed in addresses.md. On the Frontend mke sure to be on Base Sepolia to access the Wormhole Features. On Arbitrum you can normaly take part in the IFO and bridge your ETH via Wormhole Connect or your FTT Tokens via our Bridge.
+### Use Contracts.
 
 To participate in a Crosschain IFO users will have to call `sendMessage` on the `WormholeIFO.sol` contract. This will send the cost of the IFO plus he Wormhole costs into the contract, the user then has the ability to use `claimWrappedFTTs` after the IFO has ended to gain their Wrapped FTT's.
 
