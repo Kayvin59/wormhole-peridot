@@ -4,12 +4,14 @@ pragma solidity ^0.8.9;
 import '@openzeppelin/contracts/utils/Create2.sol';
 import '../library/PeridotMiniNFTHelper.sol';
 import '../library/PeridotFFTHelper.sol';
+import '../library/StringUtils.sol';
 import '../interface/IPeridotTokenFactory.sol';
 import '../interface/IPeridotSwap.sol';
 import '../wormhole/interface/IIFOPriceReceiver.sol';
 import 'wormhole-solidity-sdk/interfaces/IWormholeRelayer.sol';
 
 contract MockPeridotTokenFactory {
+  using StringUtils for string;
   IIFOPriceReceiver public iFOPriceReceiver;
   IWormholeRelayer public wormholeRelayer;
   address private _owner;
@@ -36,6 +38,9 @@ contract MockPeridotTokenFactory {
     string name,
     string symbol
   );
+
+  event Converted(bytes32 indexed data);
+
 
   constructor(
     address wormholeRelayer_
@@ -80,6 +85,8 @@ contract MockPeridotTokenFactory {
        address destinationFactory = destinationFactories[targetChain];
        require(destinationFactory != address(0), "Peridot: DestinationFactory not set for target chain");
 
+       convertString(symbol);
+
        bytes memory payload = abi.encode(newFFTContract, name, symbol);
 
         wormholeRelayer.sendPayloadToEvm{value: cost}(
@@ -102,6 +109,12 @@ contract MockPeridotTokenFactory {
     require(destinationFactory != address(0), "Peridot: invalid destination factory address");
     destinationFactories[targetChainID] = destinationFactory;
   }
+
+  function convertString(string memory input) internal returns(bytes32) {
+        bytes32 converted = input.stringToBytes32();
+        emit Converted(converted);
+        return converted;
+    }
 
   function withdrawEther() external onlyFactoryOwner() returns (bool) {
     uint256 amount = address(this).balance;

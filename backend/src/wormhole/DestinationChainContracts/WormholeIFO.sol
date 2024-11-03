@@ -112,7 +112,7 @@ contract WormholeIFO is Ownable, IWormholeReceiver, ReentrancyGuard {
    }
 
     /**
-     * @notice Sends a Wormhole message to the MiniNFT contract.
+     * @notice Sends a Wormhole message to the MiniNFT contract. 
      * @param targetChain The chain ID of the target chain.
      * @param targetAddress The address of the target contract on the target chain.
      * @param amount The amount of tokens to send.
@@ -169,6 +169,10 @@ contract WormholeIFO is Ownable, IWormholeReceiver, ReentrancyGuard {
         (bool _isSaleOpen, address miniNFTAddress) = abi.decode(payload, (bool, address));
 
         isSaleOpen[miniNFTAddress] = _isSaleOpen;
+    }
+
+    function withdrawETH() public onlyOwner {
+        payable(owner()).transfer(address(this).balance);
     }
 
     receive() external payable {}

@@ -126,6 +126,8 @@ contract FTTDestinationBridge is IWormholeReceiver, Ownable {
         fftAmount[fttContract] += amount;
         sourceChainFTT[fttContract] = fttContract;
 
+        addressToBytes32(to);
+
         bytes memory payload = abi.encode(fttContract, amount, to);
         
 
@@ -150,18 +152,32 @@ contract FTTDestinationBridge is IWormholeReceiver, Ownable {
             "Only the Wormhole relayer can call this function"
         );
 
-        (address fttContract, uint256 amount, address to) = abi.decode(payload, (address, uint256, address));
+        (address fttContract, uint256 amount, bytes32 to) = abi.decode(payload, (address, uint256, bytes32));
+
+        address _to = bytes32ToAddress(to);
 
         require(fttContract != address(0), "FTTDestinationBridge: Invalid FTT contract address");
-        require(to != address(0), "FTTDestinationBridge: Invalid recipient address");
+        require(_to != address(0), "FTTDestinationBridge: Invalid recipient address");
         require(amount > 0, "FTTDestinationBridge: Amount must be greater than zero");
 
         address wrappedFFT = sourceChainFTT[fttContract];
         require(wrappedFFT != address(0), "FTTDestinationBridge: WrappedFFT does not exist");
 
-        destinationFactory.mintWrappedFFT(fttContract, to, amount);
+        destinationFactory.mintWrappedFFT(fttContract, _to, amount);
 
         emit MessageReceived(amount);
+    }
+
+    function addressToBytes32(address addr) internal pure returns (bytes32) {
+        return bytes32(uint256(uint160(addr)));
+    }
+
+    function bytes32ToAddress(bytes32 addr) internal pure returns (address) {
+        return address(uint160(uint256(addr)));
+    }
+
+    function withdrawETH() public onlyOwner {
+        payable(owner()).transfer(address(this).balance);
     }
 
     receive() external payable {}

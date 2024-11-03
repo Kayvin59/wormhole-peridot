@@ -6,11 +6,11 @@ import 'wormhole-solidity-sdk/interfaces/IWormholeRelayer.sol';
 
 contract SimpleStorage is IWormholeReceiver {
     IWormholeRelayer public wormholeRelayer;
-    uint256 public value = 0;
+    address public value;
     uint256 public GAS_LIMIT = 1_000_000;
     mapping(uint16 => bytes32) public registeredSenders;
     mapping(bytes32 => address) public registeredAddress;
-    bool public messageDelivered = false;
+    string public messageDelivered;
 
     struct Message {
         bool _messageDelivered;
@@ -40,8 +40,8 @@ contract SimpleStorage is IWormholeReceiver {
     function sendMessage(
         uint16 targetChain,
         address targetAddress,
-        bool _messageDelivered,
-        uint256 _value	
+        string memory _messageDelivered,
+        address _address
     ) public payable {
         uint256 cost = quoteCrossChainCost(targetChain);
 
@@ -50,7 +50,7 @@ contract SimpleStorage is IWormholeReceiver {
             "Insufficient funds for cross-chain delivery"
         );
 
-        bytes memory payload = abi.encode(_messageDelivered, _value);
+        bytes memory payload = abi.encode(_messageDelivered, _address);
 
         wormholeRelayer.sendPayloadToEvm{value: cost}(
             targetChain,
@@ -82,9 +82,9 @@ contract SimpleStorage is IWormholeReceiver {
             "Only the Wormhole relayer can call this function"  
         );
 
-        (bool _messageDelivered, uint256 _value) = abi.decode(payload, (bool, uint256));
+        (string memory _messageDelivered, address _address) = abi.decode(payload, (string, address));
 
-        value = _value;
+        value = _address;
         messageDelivered = _messageDelivered;
         
     }

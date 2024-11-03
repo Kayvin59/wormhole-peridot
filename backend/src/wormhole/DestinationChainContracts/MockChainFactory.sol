@@ -6,9 +6,12 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "wormhole-solidity-sdk/interfaces/IWormholeReceiver.sol";
 import "wormhole-solidity-sdk/interfaces/IWormholeRelayer.sol";
 import "../../interface/IPeridotFFT.sol";
+import "../../library/BytesUtils.sol";
 import "./WrappedFTT.sol";
 
 contract DestinationChainFactory is IWormholeReceiver, Ownable {
+    using BytesUtils for bytes32;
+
     IWormholeRelayer public wormholeRelayer;
 
     uint256 constant GAS_LIMIT = 2000000;
@@ -19,6 +22,14 @@ contract DestinationChainFactory is IWormholeReceiver, Ownable {
 
     mapping(uint16 => bytes32) public registeredSenders;
 
+    mapping(address => WrappedFTT) public wrappedFTTs;
+
+    struct WrappedFTT {
+        address sourceFFT;
+        string name;
+        string symbol;
+    }
+
     event WrappedFFTCreated(
         uint16 indexed sourceChainID,
         address indexed sourceFFT,
@@ -27,6 +38,7 @@ contract DestinationChainFactory is IWormholeReceiver, Ownable {
 
     event BridgeAuthorized(address indexed bridge);
     event BridgeRevoked(address indexed bridge);
+    event Converted(string data);
 
     modifier isRegisteredSender(uint16 sourceChain, bytes32 sourceAddress) {
         require(
@@ -115,20 +127,30 @@ contract DestinationChainFactory is IWormholeReceiver, Ownable {
             "DestinationChainFactory: Only the Wormhole relayer can call this function"
         );
 
-        (address sourceFFT, string memory name, string memory symbol) = abi.decode(payload, (address, string, string));
+        (address sourceFFT, string memory name, bytes32 _symbol) = abi.decode(payload, (address, string, bytes32));
+
+        string memory symbol = convertBytes32(_symbol);
 
         /*require(
             sourceChainFTT[sourceFFT] == address(0),
             "DestinationChainFactory: WrappedFFT already exists"
         );*/
 
-        // Deploy the WrappedFFT token
+        /*// Deploy the WrappedFFT token
         address wrappedFFT = _deployWrappedFFT(name, symbol);
 
         // Map the sourceChainID and sourceFFT to the WrappedFFT address
         sourceChainFTT[sourceFFT] = wrappedFFT;
 
-        emit WrappedFFTCreated(sourceChain, sourceFFT, wrappedFFT);
+        emit WrappedFFTCreated(sourceChain, sourceFFT, wrappedFFT);*/
+
+        WrappedFTT memory newWrappedFTT = WrappedFTT({
+        sourceFFT: sourceFFT,
+        name: name,
+        symbol: symbol
+    });
+
+    wrappedFTTs[sourceFFT] = newWrappedFTT;
     }
 
     /**
@@ -137,10 +159,14 @@ contract DestinationChainFactory is IWormholeReceiver, Ownable {
      * @param symbol The symbol of the WrappedFFT token.
      * @return wrappedFFT The address of the deployed WrappedFFT token.
      */
-    function _deployWrappedFFT(string memory name, string memory symbol) internal returns (address wrappedFFT) {
+    function _deployWrappedFFT(string memory name, string memory symbol, address sourceFTT) internal returns (address wrappedFFT) {
         // Deploy a new ERC20 token with minting capabilities
         WrappedFFT newWrappedFFT = new WrappedFFT(name, symbol, address(this));
         wrappedFFT = address(newWrappedFFT);
+
+        sourceChainFTT[sourceFTT] = wrappedFFT;
+
+        return wrappedFFT;
     }
 
     /**
@@ -154,6 +180,12 @@ contract DestinationChainFactory is IWormholeReceiver, Ownable {
         require(wrappedFFT != address(0), "DestinationChainFactory: WrappedFFT does not exist");
 
         WrappedFFT(wrappedFFT).mint(to, amount);
+    }
+
+    function convertBytes32(bytes32 input) internal returns (string memory) {
+        string memory converted = input.bytes32ToString();
+        emit Converted(converted);
+        return converted;
     }
 
     /**

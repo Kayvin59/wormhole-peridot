@@ -27,12 +27,6 @@ contract PeridotTokenFactory is IPeridotTokenFactory {
   mapping(address => address) public projectToFFT;
 
   mapping(uint16 => address) public destinationFactories;
-
-  struct FFTMessage {
-    string name;
-    string symbol;
-    address sourceFFT;
-  }
   
   event CollectionPairCreated(
         address indexed projectAddress,
@@ -44,8 +38,7 @@ contract PeridotTokenFactory is IPeridotTokenFactory {
     uint16 indexed targetChain,
     address indexed targetAddress,
     address indexed fttContract,
-    string name,
-    string symbol
+    string name
   );
 
   constructor(
@@ -187,13 +180,11 @@ contract PeridotTokenFactory is IPeridotTokenFactory {
     * @param targetChain The ID of the target blockchain.
     * @param newFFTContract The address of the newly deployed FFT contract.
     * @param name The name of the FFT token.
-    * @param symbol The symbol of the FFT token.
     */
    function _sendWormholeMessage(
        uint16 targetChain,
        address newFFTContract,
-       string memory name,
-       string memory symbol
+       string memory name
    ) public payable onlyFactoryOwner {
         uint256 cost = quoteCrossChainCost(targetChain);
 
@@ -205,7 +196,7 @@ contract PeridotTokenFactory is IPeridotTokenFactory {
        address destinationFactory = destinationFactories[targetChain];
        require(destinationFactory != address(0), "Peridot: DestinationFactory not set for target chain");
 
-       bytes memory payload = abi.encode(newFFTContract, name, symbol);
+       bytes memory payload = abi.encode(newFFTContract, name);
 
         wormholeRelayer.sendPayloadToEvm{value: cost}(
             targetChain,
@@ -215,7 +206,7 @@ contract PeridotTokenFactory is IPeridotTokenFactory {
             GAS_LIMIT
         );
 
-        emit FFTMessageSent(targetChain, destinationFactory, newFFTContract, name, symbol);
+        emit FFTMessageSent(targetChain, destinationFactory, newFFTContract, name);
    }
 
    /**

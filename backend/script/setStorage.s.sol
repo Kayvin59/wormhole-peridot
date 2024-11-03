@@ -5,7 +5,7 @@ import {Script, console} from "../lib/forge-std/src/Script.sol";
 import {SimpleStorage} from "../src/test/SimpleStorage.sol";
 
 contract SetRegisteredSender is Script {
-    address constant sourceStorage = 0xf92397D44E89E56D53B8BF0479EAaCaBe9cB36cB;
+    address constant sourceStorage = 0xc6e3f8Fa7C6683ce700bB5754e7716C4AF9237eE;
     uint16 constant targetChain = 10003;
 
     function addressToBytes32(address addr) internal pure returns (bytes32) {
@@ -28,7 +28,7 @@ contract SetRegisteredSender is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY_TEST");
         vm.startBroadcast(deployerPrivateKey);
 
-        SimpleStorage simpleStorage = SimpleStorage(payable(0x342c7E29919429c6A708E10AeF42706ef211B4B6));
+        SimpleStorage simpleStorage = SimpleStorage(payable(0x6dB8f2594AcaD1673aEaCB52da139665e7d7de14));
 
 
         console.log("Attempting to set SimpleStorage...");

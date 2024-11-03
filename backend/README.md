@@ -10,6 +10,26 @@ The Peridot Wormhole contracts are responsible for sending and receiving FFTs ac
 
 These contracts also allow for users to bridge their ERC20 Fractions to other chains.
 
+## Testing Instructions
+
+### Use deployed Contracts.
+
+The deployed Contracts on the Source Chain are on Arbitrum Sepolia and for the Destination Chain on Base Sepolia.
+
+You can access the contracts either through the Frontend(https://peridot.finance) or directly via the smart contracts which are listed in addresses.md. On the Frontend mke sure to be on Base Sepolia to access the Wormhole Features. On Arbitrum you can normaly take part in the IFO and bridge your ETH via Wormhole Connect or your FTT Tokens via our Bridge.
+
+To participate in a Crosschain IFO users will have to call `sendMessage` on the `WormholeIFO.sol` contract. This will send the cost of the IFO plus he Wormhole costs into the contract, the user then has the ability to use `claimWrappedFTTs` after the IFO has ended to gain their Wrapped FTT's.
+
+The `FTTSourceBridge.sol` & `FTTDestinationBridge.sol` allow users to bridge their FTT's or Wrapped FTT's by calling the `sendMessage` function.
+
+### New Deployment
+
+Don't forget to set your env & the proper contract addresses in the deployment scripts. In addition `WormholeDeployDestination.s.sol` & `setRegisteredSenderDestination.s.sol` have to be deployed/called on a different chain then then the other contracts. In our example we have used Arbitrum Sepolia as the Source Chain and Base Sepolia as the Destination Chain.
+
+Deploy `DeployPeridotComplete.s.sol -> WormholeDeployDestination.s.sol -> setPeridotFactory.s.sol -> createCollection.s.sol -> setMiniNFT.s.sol -> setRegisteredSender.s.sol -> setRegisteredSenderDestination.s.sol`
+
+On the Mini NFT Contract, you can `startNewRound` and later `closeRound` if the round is done. The mini NFT has to `sendMessage` to the `WormholeIFO` contracts after a round has started to communicate to te other chains, the price and which FTT belongs to the Mini NFT.
+
 ## New Contracts
 
 - `WormholeIFO`: The Wormhole IFO contract allows users to participate in the IFO on Ethereum from other chains. Itcan and needs to be contacted from Ethereum that a) saleIsOpen is true and b) that the Price Quoter has given the PriceReceiver the price for the blind box. After the IFO is closed the user can claim their FTT tokens but not their Blindboxes.

@@ -118,6 +118,8 @@ contract FTTSourceBridge is IWormholeReceiver, Ownable {
         require(amount > 0, "FTTSourceBridge: Amount must be greater than zero");
         require(to != address(0), "FTTSourceBridge: Invalid recipient address");
 
+        addressToBytes32(to);
+
         bytes memory payload = abi.encode(fttContract, amount, to);
 
         wormholeRelayer.sendPayloadToEvm{value: cost}(
@@ -147,7 +149,7 @@ contract FTTSourceBridge is IWormholeReceiver, Ownable {
             "Only the Wormhole relayer can call this function"
         );
 
-        (address fttContract, uint256 amount, address to) = abi.decode(payload, (address, uint256, address));
+        (address fttContract, uint256 amount, bytes32 to) = abi.decode(payload, (address, uint256, bytes32));
 
         require(amount > fftAmount[fttContract], "FTTSourceBridge: Amount must be greater than fftAmount");
 
@@ -155,10 +157,26 @@ contract FTTSourceBridge is IWormholeReceiver, Ownable {
 
         require(token.balanceOf(address(this)) >= amount, "Insufficient ERC20 balance");
 
+        address _to = bytes32ToAddress(to);
+
         // Transfer the ERC20 tokens to the recipient
-        bool success = token.transfer(to, amount);
+        bool success = token.transfer(_to, amount);
         require(success, "ERC20 transfer failed");
 
         emit MessageReceived(amount);
     }
+
+    function addressToBytes32(address addr) internal pure returns (bytes32) {
+        return bytes32(uint256(uint160(addr)));
+    }
+
+    function bytes32ToAddress(bytes32 addr) internal pure returns (address) {
+        return address(uint160(uint256(addr)));
+    }
+
+    function withdrawETH() public onlyOwner {
+        payable(owner()).transfer(address(this).balance);
+    }
+
+    receive() external payable {}
 }
