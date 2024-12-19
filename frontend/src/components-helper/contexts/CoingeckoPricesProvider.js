@@ -3,18 +3,18 @@ import { getTokenPrices } from "../../lib/api/coingecko.js";
 
 export const CoingeckoPricesContext = createContext();
 
-export function CoingeckoPricesProvider({children}) {
-	const [prices, setPrices] = useState(undefined);
+export function CoingeckoPricesProvider({ children }) {
+  const [prices, setPrices] = useState(undefined);
 
-	useEffect(() => {
-		getTokenPrices().then(result => {
-			setPrices(result);
-		});
-	}, []);
+  useEffect(() => {
+    getTokenPrices().then((result) => {
+      setPrices(result);
+    });
+  }, []);
 
-	return (
-		<CoingeckoPricesContext.Provider value={prices}>
-			{children}
-		</CoingeckoPricesContext.Provider>
-	);
+  return (
+    <CoingeckoPricesContext.Provider value={prices}>
+      {children}
+    </CoingeckoPricesContext.Provider>
+  );
 }

@@ -3,11 +3,11 @@ import Main from "../../structure/Main.js";
 import Bridge from "./Bridge.js";
 
 export default function BridgeContainer() {
-	return (
-		<Main>
-			<BalancesProvider>
-				<Bridge/>
-			</BalancesProvider>
-		</Main>
-	);
+  return (
+    <Main>
+      <BalancesProvider>
+        <Bridge />
+      </BalancesProvider>
+    </Main>
+  );
 }

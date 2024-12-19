@@ -1,30 +1,31 @@
 import { useState, useEffect } from "react";
 
 export default function useScrollOpacityEffect() {
-	const maxOpacity = 1;
+  const maxOpacity = 1;
 
-	const [scrollOpacity, setScrollOpacity] = useState(maxOpacity);
+  const [scrollOpacity, setScrollOpacity] = useState(maxOpacity);
 
-	// ---- HOOKS ----
+  // ---- HOOKS ----
 
-	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
 
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
-	}, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
-	// ---- FUNCTIONS ----
+  // ---- FUNCTIONS ----
 
-	function handleScroll() {
-		const opacityRange = 1.5;
-		const scrollPosition = window.scrollY;
+  function handleScroll() {
+    const opacityRange = 1.5;
+    const scrollPosition = window.scrollY;
 
-		const calculatedOpacity = maxOpacity - (scrollPosition / window.innerHeight) * opacityRange;
+    const calculatedOpacity =
+      maxOpacity - (scrollPosition / window.innerHeight) * opacityRange;
 
-		setScrollOpacity(calculatedOpacity);
-	}
+    setScrollOpacity(calculatedOpacity);
+  }
 
-	return scrollOpacity;
+  return scrollOpacity;
 }

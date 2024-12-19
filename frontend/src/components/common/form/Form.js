@@ -4,7 +4,12 @@ import { ConnectionContext } from "../../../components-helper/contexts/Connectio
 import { isDefined } from "../../../lib/helper.js";
 import { conc } from "../../../lib/wrapper/html.js";
 
-import { connectedText, chainText, minBalanceText, minEqualBalanceText } from "../../../data/messages.js";
+import {
+  connectedText,
+  chainText,
+  minBalanceText,
+  minEqualBalanceText,
+} from "../../../data/messages.js";
 
 // ---- PROPS ----
 
@@ -28,167 +33,185 @@ import { connectedText, chainText, minBalanceText, minEqualBalanceText } from ".
 // props.subLabel: label below the submit button
 
 export default forwardRef((props, ref) => {
-	const processingText = "Processing";
-	const intervalLength = 300;
+  const processingText = "Processing";
+  const intervalLength = 300;
 
-	const defaultMinValue = 0;
-	const defaultIsMinEqual = true;
+  const defaultMinValue = 0;
+  const defaultIsMinEqual = true;
 
-	const { isWeb3Available, isChainSupported, isConnected, connectedChain } = useContext(ConnectionContext);
+  const { isWeb3Available, isChainSupported, isConnected, connectedChain } =
+    useContext(ConnectionContext);
 
-	const [isFormOkay, setIsFormOkay] = useState(false);
+  const [isFormOkay, setIsFormOkay] = useState(false);
 
-	const [buttonText, setButtonText] = useState(props.text);
-	const [intervalId, setIntervalId] = useState(undefined);
+  const [buttonText, setButtonText] = useState(props.text);
+  const [intervalId, setIntervalId] = useState(undefined);
 
-	const buttonRef = useRef(null);
+  const buttonRef = useRef(null);
 
-	// ---- HOOKS ----
+  // ---- HOOKS ----
 
-	useEffect(() => {
-		refreshValidity();
-	}, [
-		isWeb3Available,
-		isChainSupported,
-		isConnected,
-		connectedChain,
-		props.isLoading,
-		props.isProcessing,
-		props.isOff,
-		props.chain,
-		props.currentValue,
-		props.minValue,
-		props.isMinEqual,
-		props.minText
-	]);
+  useEffect(() => {
+    refreshValidity();
+  }, [
+    isWeb3Available,
+    isChainSupported,
+    isConnected,
+    connectedChain,
+    props.isLoading,
+    props.isProcessing,
+    props.isOff,
+    props.chain,
+    props.currentValue,
+    props.minValue,
+    props.isMinEqual,
+    props.minText,
+  ]);
 
-	useEffect(() => {
-		setExtraValidity();
-	}, [props.extraText]);
+  useEffect(() => {
+    setExtraValidity();
+  }, [props.extraText]);
 
-	useEffect(() => {
-		refreshButton();
-	}, [intervalId, props.isProcessing, props.text]);
+  useEffect(() => {
+    refreshButton();
+  }, [intervalId, props.isProcessing, props.text]);
 
-	// ---- FUNCTIONS ----
+  // ---- FUNCTIONS ----
 
-	function isChainOkay() {
-		let isChainOkay = undefined;
+  function isChainOkay() {
+    let isChainOkay = undefined;
 
-		if (props.chain !== undefined) {
-			isChainOkay = connectedChain === props.chain.nameId;
-		} else {
-			isChainOkay = isChainSupported;
-		}
+    if (props.chain !== undefined) {
+      isChainOkay = connectedChain === props.chain.nameId;
+    } else {
+      isChainOkay = isChainSupported;
+    }
 
-		return isChainOkay;
-	}
+    return isChainOkay;
+  }
 
-	function isLoading() {
-		let isChainLoading = (isWeb3Available === true) && !isDefined(isConnected, isChainSupported, connectedChain);
-		let isLoading = (isConnected === true) && isChainOkay() && props.isLoading;
+  function isLoading() {
+    let isChainLoading =
+      isWeb3Available === true &&
+      !isDefined(isConnected, isChainSupported, connectedChain);
+    let isLoading = isConnected === true && isChainOkay() && props.isLoading;
 
-		return isChainLoading || isLoading || (props.isProcessing === true) || (props.isOff === true);
-	}
+    return (
+      isChainLoading ||
+      isLoading ||
+      props.isProcessing === true ||
+      props.isOff === true
+    );
+  }
 
-	function setValidity(text) {
-		buttonRef.current.setCustomValidity(text);
+  function setValidity(text) {
+    buttonRef.current.setCustomValidity(text);
 
-		setIsFormOkay(text === "");
-	}
+    setIsFormOkay(text === "");
+  }
 
-	function setExtraValidity() {
-		if (props.extraText !== undefined && props.extraText !== "DEFAULT") {
-			buttonRef.current.setCustomValidity(props.extraText);
-		}
-	}
+  function setExtraValidity() {
+    if (props.extraText !== undefined && props.extraText !== "DEFAULT") {
+      buttonRef.current.setCustomValidity(props.extraText);
+    }
+  }
 
-	function refreshValidity() {
-		if (!isLoading()) {
-			if (isConnected === true) {
-				if (isChainOkay()) {
-					let hasCurrentValue = props.currentValue !== undefined;
-	
-					if (hasCurrentValue) {
-						let currentValueFloat = parseFloat(props.currentValue);
-	
-						let minValue = props.minValue ?? defaultMinValue;
-						let minValueFloat = parseFloat(minValue);
-	
-						if (props.isMinEqual ?? defaultIsMinEqual) {
-							if (currentValueFloat >= minValueFloat) {
-								setValidity("");
-							} else {
-								setValidity(props.minText ?? minBalanceText(props.currentValue, minValue));
-							}
-						} else {
-							if (currentValueFloat > minValueFloat) {
-								setValidity("");
-							} else {
-								setValidity(props.minText ?? minEqualBalanceText(props.currentValue, minValue));
-							}
-						}
-					} else {
-						setValidity("");
-					}
-				} else {
-					setValidity(chainText());
-				}
-			} else {
-				setValidity(connectedText());
-			}
-		}
-	}
+  function refreshValidity() {
+    if (!isLoading()) {
+      if (isConnected === true) {
+        if (isChainOkay()) {
+          let hasCurrentValue = props.currentValue !== undefined;
 
-	function refreshButton() {
-		if (props.isProcessing) {
-			if (intervalId === undefined) {
-				setButtonText(processingText);
-	
-				let dots = "";
-				let interval = setInterval(() => {
-					dots = dots.length < 3 ? dots + "." : "";
-	
-					setButtonText(processingText + dots);
-				}, intervalLength);
-	
-				setIntervalId(interval);
-			}
-		} else {
-			clearInterval(intervalId);
-			setIntervalId(undefined);
-			setButtonText(props.text);
-		}
-	}
+          if (hasCurrentValue) {
+            let currentValueFloat = parseFloat(props.currentValue);
 
-	// ---- FUNCTIONS (CLICK HANDLERS) ----
+            let minValue = props.minValue ?? defaultMinValue;
+            let minValueFloat = parseFloat(minValue);
 
-	function handleForm(event) {
-		event.preventDefault();
+            if (props.isMinEqual ?? defaultIsMinEqual) {
+              if (currentValueFloat >= minValueFloat) {
+                setValidity("");
+              } else {
+                setValidity(
+                  props.minText ?? minBalanceText(props.currentValue, minValue),
+                );
+              }
+            } else {
+              if (currentValueFloat > minValueFloat) {
+                setValidity("");
+              } else {
+                setValidity(
+                  props.minText ??
+                    minEqualBalanceText(props.currentValue, minValue),
+                );
+              }
+            }
+          } else {
+            setValidity("");
+          }
+        } else {
+          setValidity(chainText());
+        }
+      } else {
+        setValidity(connectedText());
+      }
+    }
+  }
 
-		if (event.target.checkValidity()) {
-			props.handler();
-		}
-	}
+  function refreshButton() {
+    if (props.isProcessing) {
+      if (intervalId === undefined) {
+        setButtonText(processingText);
 
-	return (
-		<div className={styles.container}>
-			<form onSubmit={handleForm} ref={ref} id={props.formId} className={styles.form}>
-				{props.children}
+        let dots = "";
+        let interval = setInterval(() => {
+          dots = dots.length < 3 ? dots + "." : "";
 
-				<input
-					type="submit"
-					ref={buttonRef}
-					className={conc(styles.button, props.buttonClassNames)}
-					value={buttonText}
-					disabled={isLoading()}
-					isformokay={isFormOkay.toString()}/>
-			</form>
+          setButtonText(processingText + dots);
+        }, intervalLength);
 
-			{
-				props.subLabel !== undefined &&
-				<div className={styles.sub_label}>{props.subLabel}</div>
-			}
-		</div>
-	);
+        setIntervalId(interval);
+      }
+    } else {
+      clearInterval(intervalId);
+      setIntervalId(undefined);
+      setButtonText(props.text);
+    }
+  }
+
+  // ---- FUNCTIONS (CLICK HANDLERS) ----
+
+  function handleForm(event) {
+    event.preventDefault();
+
+    if (event.target.checkValidity()) {
+      props.handler();
+    }
+  }
+
+  return (
+    <div className={styles.container}>
+      <form
+        onSubmit={handleForm}
+        ref={ref}
+        id={props.formId}
+        className={styles.form}
+      >
+        {props.children}
+
+        <input
+          type="submit"
+          ref={buttonRef}
+          className={conc(styles.button, props.buttonClassNames)}
+          value={buttonText}
+          disabled={isLoading()}
+          isformokay={isFormOkay.toString()}
+        />
+      </form>
+
+      {props.subLabel !== undefined && (
+        <div className={styles.sub_label}>{props.subLabel}</div>
+      )}
+    </div>
+  );
 });

@@ -2,64 +2,64 @@
 @use "../../../../styles/variables";
 
 .container {
-	@include mixins.box;
+  @include mixins.box;
 
-	cursor: pointer;
-	text-align: left;
-	background-color: var(--landing-element-color-1);
+  cursor: pointer;
+  text-align: left;
+  background-color: var(--landing-element-color-1);
 
-	transition: var(--transition-long);
-	transition-property: background-color;
+  transition: var(--transition-long);
+  transition-property: background-color;
 
-	&:hover {
-		background-color: var(--landing-element-color-hover);
+  &:hover {
+    background-color: var(--landing-element-color-hover);
 
-		transition: var(--transition-long);
-		transition-property: background-color;
-	}
+    transition: var(--transition-long);
+    transition-property: background-color;
+  }
 
-	> div:first-child {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		gap: 10px;
-		font-size: 24px;
+  > div:first-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
 
-		@media screen and (max-width: variables.$mobile-breakpoint-medium) {
-			font-size: 19px;
-		}
-	}
+    @media screen and (max-width: variables.$mobile-breakpoint-medium) {
+      font-size: 19px;
+    }
+  }
 
-	> div:last-child > div > div > div {
-		@include mixins.box;
+  > div:last-child > div > div > div {
+    @include mixins.box;
 
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-		
-		background-color: var(--landing-element-color-1);
-		cursor: default;
-		font-size: 20px;
-		margin-top: var(--padding-big);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 
-		@media screen and (max-width: variables.$mobile-breakpoint-medium) {
-			font-size: 16px;
-		}
+    background-color: var(--landing-element-color-1);
+    cursor: default;
+    font-size: 20px;
+    margin-top: var(--padding-big);
 
-		@media screen and (max-width: variables.$mobile-breakpoint-small) {
-			margin-top: var(--padding-small);
-		}
-	}
+    @media screen and (max-width: variables.$mobile-breakpoint-medium) {
+      font-size: 16px;
+    }
+
+    @media screen and (max-width: variables.$mobile-breakpoint-small) {
+      margin-top: var(--padding-small);
+    }
+  }
 }
 
 .sort_arrow_up {
-	margin-bottom: -2px;
+  margin-bottom: -2px;
 
-	@media screen and (max-width: variables.$mobile-breakpoint-medium) {
-		margin-bottom: -5px;
-	}
+  @media screen and (max-width: variables.$mobile-breakpoint-medium) {
+    margin-bottom: -5px;
+  }
 }
 
 .sort_arrow_down {
-	margin-top: -10px;
+  margin-top: -10px;
 }

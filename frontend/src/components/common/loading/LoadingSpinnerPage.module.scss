@@ -2,24 +2,24 @@
 @use "../../../styles/mixins";
 
 .container {
-	@include mixins.middle;
+  @include mixins.middle;
 
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 
-	animation: fade_almost_loop 1s ease infinite;
-	background-color: var(--color-1);
-	padding: var(--padding-small);
-	border-radius: var(--border-radius);
-	align-self: center;
-	opacity: var(--opacity-low);
+  animation: fade_almost_loop 1s ease infinite;
+  background-color: var(--color-1);
+  padding: var(--padding-small);
+  border-radius: var(--border-radius);
+  align-self: center;
+  opacity: var(--opacity-low);
 }
 
 .title {
-	font-size: 50px;
-	color: var(--color-4);
-	text-align: center;
+  font-size: 50px;
+  color: var(--color-4);
+  text-align: center;
 }

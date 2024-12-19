@@ -8,32 +8,30 @@ import Header from "./header/Header.js";
 import Footer from "./Footer.js";
 import { scrollToAnchor } from "../../lib/wrapper/html.js";
 
-export default function Main({children}) {
-	const scrollDelay = 1500;
+export default function Main({ children }) {
+  const scrollDelay = 1500;
 
-	const location = useLocation();
+  const location = useLocation();
 
-	useEffect(() => {
-		const timeoutId = setTimeout(() => {
-			scrollToAnchor();
-		}, scrollDelay);
-	
-		return () => clearTimeout(timeoutId);
-	}, [location]);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      scrollToAnchor();
+    }, scrollDelay);
 
-	return (
-		<ConnectionProvider>
-			<WindowWidthProvider>
-				<Header/>
-				
-				<main className={styles.main}>											
-					{children}
-				</main>
+    return () => clearTimeout(timeoutId);
+  }, [location]);
 
-				<CookieForm/>
+  return (
+    <ConnectionProvider>
+      <WindowWidthProvider>
+        <Header />
 
-				<Footer/>
-			</WindowWidthProvider>
-		</ConnectionProvider>
-	);
+        <main className={styles.main}>{children}</main>
+
+        <CookieForm />
+
+        <Footer />
+      </WindowWidthProvider>
+    </ConnectionProvider>
+  );
 }

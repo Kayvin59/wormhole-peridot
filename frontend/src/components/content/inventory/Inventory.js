@@ -13,212 +13,225 @@ import { conc, cond } from "../../../lib/wrapper/html.js";
 import { getCollections } from "../../../data/collections.js";
 
 export default function Inventory() {
-	const dropdownAll = "ALL";
-	const pseudoLoadingTime = 800;
+  const dropdownAll = "ALL";
+  const pseudoLoadingTime = 800;
 
-	const allCollections = getCollections();
+  const allCollections = getCollections();
 
-	const headerTabs = [
-		{
-			key: "blindBox",
-			text: "My Blind Boxes"
-		},
-		{
-			key: "peridotMiniNfts",
-			text: "My Peridot Mini NFTs"
-		},
-		{
-			key: "peridotErc20",
-			text: "My Peridot ERC20 Tokens"
-		},
-	];
+  const headerTabs = [
+    {
+      key: "blindBox",
+      text: "My Blind Boxes",
+    },
+    {
+      key: "peridotMiniNfts",
+      text: "My Peridot Mini NFTs",
+    },
+    {
+      key: "peridotErc20",
+      text: "My Peridot ERC20 Tokens",
+    },
+  ];
 
-	const dropdownElements = [dropdownAll, ...allCollections.map(collection => collection.name)];
+  const dropdownElements = [
+    dropdownAll,
+    ...allCollections.map((collection) => collection.name),
+  ];
 
-	const [headerTab, setHeaderTab] = useState(headerTabs[0].key);
-	const [dropdown, setDropdown] = useState(dropdownElements[0]);
+  const [headerTab, setHeaderTab] = useState(headerTabs[0].key);
+  const [dropdown, setDropdown] = useState(dropdownElements[0]);
 
-	const [collections, setCollections] = useState(undefined);
+  const [collections, setCollections] = useState(undefined);
 
-	const [blindBoxes, setBlindBoxes] = useState(undefined);
-	const [miniNfts, setMiniNfts] = useState(undefined);
-	const [tokens, setTokens] = useState(undefined);
+  const [blindBoxes, setBlindBoxes] = useState(undefined);
+  const [miniNfts, setMiniNfts] = useState(undefined);
+  const [tokens, setTokens] = useState(undefined);
 
-	const [isPseudoLoading, setIsPseudoLoading] = useState(false);
+  const [isPseudoLoading, setIsPseudoLoading] = useState(false);
 
-	const { connectedChain } = useContext(ConnectionContext);
+  const { connectedChain } = useContext(ConnectionContext);
 
-	// ---- HOOKS ----
+  // ---- HOOKS ----
 
-	useEffect(() => {
-		initializeHeaderTab();
-	}, []);
+  useEffect(() => {
+    initializeHeaderTab();
+  }, []);
 
-	useEffect(() => {
-		refreshCollections();
-	}, [dropdown]);
+  useEffect(() => {
+    refreshCollections();
+  }, [dropdown]);
 
-	useEffect(() => {
-		refreshLists();
-	}, [collections]);
+  useEffect(() => {
+    refreshLists();
+  }, [collections]);
 
-	// ---- FUNCTIONS ----
+  // ---- FUNCTIONS ----
 
-	function initializeHeaderTab() {
-		handleTabChange(headerTabs[0].key);
-	}
+  function initializeHeaderTab() {
+    handleTabChange(headerTabs[0].key);
+  }
 
-	function refreshCollections() {
-		if (dropdown === dropdownAll) {
-			setCollections([...allCollections]);
-		} else {
-			let collection = [allCollections.find(collection => collection.name === dropdown)];
+  function refreshCollections() {
+    if (dropdown === dropdownAll) {
+      setCollections([...allCollections]);
+    } else {
+      let collection = [
+        allCollections.find((collection) => collection.name === dropdown),
+      ];
 
-			setCollections([...collection]);
-		}
-	}
+      setCollections([...collection]);
+    }
+  }
 
-	function refreshLists() {
-		refreshBlindBoxes();
-		refreshMiniNfts();
-		refreshTokens();
-	}
+  function refreshLists() {
+    refreshBlindBoxes();
+    refreshMiniNfts();
+    refreshTokens();
+  }
 
-	async function refreshBlindBoxes() {
-		if (collections !== undefined) {
-			let promises = collections.map(async (collection, index) => {
-				return <BlindBox key={index} collection={collection} refreshLists={refreshLists}/>;
-			});
+  async function refreshBlindBoxes() {
+    if (collections !== undefined) {
+      let promises = collections.map(async (collection, index) => {
+        return (
+          <BlindBox
+            key={index}
+            collection={collection}
+            refreshLists={refreshLists}
+          />
+        );
+      });
 
-			let blindBoxes = await Promise.all(promises);
+      let blindBoxes = await Promise.all(promises);
 
-			setBlindBoxes([...blindBoxes]);
-		}
-	}
+      setBlindBoxes([...blindBoxes]);
+    }
+  }
 
-	async function refreshMiniNfts() {
-		if (collections !== undefined) {
-			let promises = collections.map(async (collection, index) => {
-				return <MiniNft key={index} collection={collection}/>;
-			});
+  async function refreshMiniNfts() {
+    if (collections !== undefined) {
+      let promises = collections.map(async (collection, index) => {
+        return <MiniNft key={index} collection={collection} />;
+      });
 
-			let miniNfts = await Promise.all(promises);
+      let miniNfts = await Promise.all(promises);
 
-			setMiniNfts([...miniNfts]);
-		}
-	}
+      setMiniNfts([...miniNfts]);
+    }
+  }
 
-	async function refreshTokens() {
-		if (collections !== undefined) {
-			let promises = collections.map((collection, index) => {
-				return <PeridotToken key={index} collection={collection}/>;
-			});
-	
-			let tokens = await Promise.all(promises);
-	
-			setTokens([...tokens]);
-		}
-	}
+  async function refreshTokens() {
+    if (collections !== undefined) {
+      let promises = collections.map((collection, index) => {
+        return <PeridotToken key={index} collection={collection} />;
+      });
 
-	// ---- FUNCTIONS (CLICK HANDLERS) ----
+      let tokens = await Promise.all(promises);
 
-	function handleDropdownChange(collectionName) {
-		if (collectionName !== dropdown) {
-			setIsPseudoLoading(true);
-			setDropdown(collectionName);
+      setTokens([...tokens]);
+    }
+  }
 
-			setTimeout(() => {
-				setIsPseudoLoading(false);
-			}, pseudoLoadingTime);
-		}
-	}
+  // ---- FUNCTIONS (CLICK HANDLERS) ----
 
-	function handleTabChange(tabKey) {
-		if (tabKey !== headerTab) {
-			setIsPseudoLoading(true);
-			setHeaderTab(tabKey);
+  function handleDropdownChange(collectionName) {
+    if (collectionName !== dropdown) {
+      setIsPseudoLoading(true);
+      setDropdown(collectionName);
 
-			setTimeout(() => {
-				setIsPseudoLoading(false);
-			}, pseudoLoadingTime);
-		}
-	}
+      setTimeout(() => {
+        setIsPseudoLoading(false);
+      }, pseudoLoadingTime);
+    }
+  }
 
-	// ---- FUNCTIONS (HTML ELEMENTS) ----
+  function handleTabChange(tabKey) {
+    if (tabKey !== headerTab) {
+      setIsPseudoLoading(true);
+      setHeaderTab(tabKey);
 
-	function getHeaderTabs() {
-		let tabs = headerTabs.map((tab, index) => {
-			if (connectedChain === "BASE" && tab.key === "peridotMiniNfts") {
-				return undefined;
-			}
+      setTimeout(() => {
+        setIsPseudoLoading(false);
+      }, pseudoLoadingTime);
+    }
+  }
 
-			return (
-				<div key={index} className={conc(styles.header_tab, cond(headerTab === tab.key, styles.header_tab_selected))} onClick={() => handleTabChange(tab.key)}>
-					{tab.text}
-				</div>
-			);
-		});
+  // ---- FUNCTIONS (HTML ELEMENTS) ----
 
-		tabs = tabs.filter(tab => tab !== undefined);
+  function getHeaderTabs() {
+    let tabs = headerTabs.map((tab, index) => {
+      if (connectedChain === "BASE" && tab.key === "peridotMiniNfts") {
+        return undefined;
+      }
 
-		return tabs;
-	}
+      return (
+        <div
+          key={index}
+          className={conc(
+            styles.header_tab,
+            cond(headerTab === tab.key, styles.header_tab_selected),
+          )}
+          onClick={() => handleTabChange(tab.key)}
+        >
+          {tab.text}
+        </div>
+      );
+    });
 
-	function getDropdownElements() {
-		return dropdownElements.map((element, index) => {
-			return (
-				<span key={index} className={styles.header_dropdown_element} onClick={() => handleDropdownChange(element)}>{element}</span>
-			);
-		});
-	}
+    tabs = tabs.filter((tab) => tab !== undefined);
 
-	return (
-		<SectionContainer>
-			<Section title={"Inventory"}>
-				<div className={styles.container}>
-					<div className={styles.header}>
-						<div className={styles.header_tab_container}>
-							{getHeaderTabs()}
-						</div>
+    return tabs;
+  }
 
-						<Dropdown title={dropdown} titleClassName={styles.header_dropdown_title}>
-							{getDropdownElements()}
-						</Dropdown>
-					</div>
+  function getDropdownElements() {
+    return dropdownElements.map((element, index) => {
+      return (
+        <span
+          key={index}
+          className={styles.header_dropdown_element}
+          onClick={() => handleDropdownChange(element)}
+        >
+          {element}
+        </span>
+      );
+    });
+  }
 
-					<div className={styles.bar}/>
+  return (
+    <SectionContainer>
+      <Section title={"Inventory"}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <div className={styles.header_tab_container}>{getHeaderTabs()}</div>
 
-					<div className={styles.content_container}>
-						{
-							!isPseudoLoading
-							?
-								<div>
-									{
-										headerTab === "blindBox"
-										?
-											<div className={styles.nft_container}>
-												{blindBoxes}
-											</div>
-										:
-											headerTab === "peridotErc20"
-											?
-												<div className={styles.token_container}>
-													{tokens}
-												</div>
-											:
-												<div className={styles.nft_container}>
-													{miniNfts}
-												</div>
-									}
-								</div>
-							:
-								<div className={styles.loading_container}>
-									<LoadingSpinner/>
-								</div>
-						}
-					</div>
-				</div>
-			</Section>
-		</SectionContainer>
-	);
+            <Dropdown
+              title={dropdown}
+              titleClassName={styles.header_dropdown_title}
+            >
+              {getDropdownElements()}
+            </Dropdown>
+          </div>
+
+          <div className={styles.bar} />
+
+          <div className={styles.content_container}>
+            {!isPseudoLoading ? (
+              <div>
+                {headerTab === "blindBox" ? (
+                  <div className={styles.nft_container}>{blindBoxes}</div>
+                ) : headerTab === "peridotErc20" ? (
+                  <div className={styles.token_container}>{tokens}</div>
+                ) : (
+                  <div className={styles.nft_container}>{miniNfts}</div>
+                )}
+              </div>
+            ) : (
+              <div className={styles.loading_container}>
+                <LoadingSpinner />
+              </div>
+            )}
+          </div>
+        </div>
+      </Section>
+    </SectionContainer>
+  );
 }

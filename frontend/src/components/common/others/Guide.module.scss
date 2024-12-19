@@ -2,35 +2,35 @@
 @use "../../../styles/variables";
 
 .container {
-	@include mixins.box;
+  @include mixins.box;
 
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
-	justify-content: center;
-	align-self: center;
-	width: fit-content;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-self: center;
+  width: fit-content;
 
-	font-size: 18px;
-	font-weight: bold;
-	
-	> div {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
+  font-size: 18px;
+  font-weight: bold;
 
-	@media screen and (max-width: variables.$mobile-breakpoint-medium) {
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-		> div > svg {
-			transform: rotate(90deg);
-		}
-	}
+  @media screen and (max-width: variables.$mobile-breakpoint-medium) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 
-	@media screen and (max-width: variables.$mobile-breakpoint-very-small) {
-		width: 100%;
-	}
+    > div > svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  @media screen and (max-width: variables.$mobile-breakpoint-very-small) {
+    width: 100%;
+  }
 }

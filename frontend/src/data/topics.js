@@ -1,5 +1,5 @@
 export const topics = {
-	ARB: {
-		TestEvent: ""
-	}
+  ARB: {
+    TestEvent: "",
+  },
 };

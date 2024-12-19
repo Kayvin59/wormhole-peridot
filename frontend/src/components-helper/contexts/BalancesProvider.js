@@ -7,59 +7,61 @@ import { getAllTokens } from "../../data/tokens.js";
 
 export const BalancesContext = createContext();
 
-export function BalancesProvider({children}) {
-	const [balances, setBalances] = useState(undefined);
+export function BalancesProvider({ children }) {
+  const [balances, setBalances] = useState(undefined);
 
-	const { isConnected } = useContext(ConnectionContext);
+  const { isConnected } = useContext(ConnectionContext);
 
-	// ---- HOOKS ----
+  // ---- HOOKS ----
 
-	useEffect(() => {
-		updateBalances();
-	}, [isConnected]);
+  useEffect(() => {
+    updateBalances();
+  }, [isConnected]);
 
-	// ---- FUNCTIONS ----
+  // ---- FUNCTIONS ----
 
-	async function updateBalances() {
-		if (isConnected === true) {
-			let tokens = getAllTokens();
-			let chainNameIds = getChains().map(chain => chain.nameId);
-			let result = {};
-		
-			let promises = [];
-		
-			for (const chainNameId of chainNameIds) {
-				result[chainNameId] = {};
-				let tokensOfChain = tokens.filter(token => token.chain.nameId === chainNameId);
-		
-				let chainPromises = tokensOfChain.map(async token => {
-					return getOwnBalance(token).then(balance => {
-						result[chainNameId][token.symbol] = balance;
-					});
-				});
-		
-				promises = promises.concat(chainPromises);
-			}
-		
-			await Promise.all(promises);
+  async function updateBalances() {
+    if (isConnected === true) {
+      let tokens = getAllTokens();
+      let chainNameIds = getChains().map((chain) => chain.nameId);
+      let result = {};
 
-			setBalances({...result});
-		}
-	}
+      let promises = [];
 
-	function getBalance(token) {
-		let balance = undefined;
+      for (const chainNameId of chainNameIds) {
+        result[chainNameId] = {};
+        let tokensOfChain = tokens.filter(
+          (token) => token.chain.nameId === chainNameId,
+        );
 
-		if (balances !== undefined) {
-			balance = balances[token.chain.nameId][token.symbol];
-		}
+        let chainPromises = tokensOfChain.map(async (token) => {
+          return getOwnBalance(token).then((balance) => {
+            result[chainNameId][token.symbol] = balance;
+          });
+        });
 
-		return balance;
-	}
+        promises = promises.concat(chainPromises);
+      }
 
-	return (
-		<BalancesContext.Provider value={{balances, getBalance, updateBalances}}>
-			{children}
-		</BalancesContext.Provider>
-	);
+      await Promise.all(promises);
+
+      setBalances({ ...result });
+    }
+  }
+
+  function getBalance(token) {
+    let balance = undefined;
+
+    if (balances !== undefined) {
+      balance = balances[token.chain.nameId][token.symbol];
+    }
+
+    return balance;
+  }
+
+  return (
+    <BalancesContext.Provider value={{ balances, getBalance, updateBalances }}>
+      {children}
+    </BalancesContext.Provider>
+  );
 }

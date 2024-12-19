@@ -5,38 +5,51 @@ import InternalLink from "../../../common/links/InternalLink.js";
 import BalanceTooltip from "../../../common/tokens/BalanceTooltip.js";
 import Token from "../../../common/tokens/Token.js";
 
-export default function PeridotToken({collection}) {
-	const [balance, setBalance] = useState(undefined);
+export default function PeridotToken({ collection }) {
+  const [balance, setBalance] = useState(undefined);
 
-	const { balances, getBalance } = useContext(BalancesContext);
+  const { balances, getBalance } = useContext(BalancesContext);
 
-	// ---- HOOKS ----
+  // ---- HOOKS ----
 
-	useEffect(() => {
-		refreshBalance();
-	}, [balances]);
+  useEffect(() => {
+    refreshBalance();
+  }, [balances]);
 
-	// ---- FUNCTIONS ----
+  // ---- FUNCTIONS ----
 
-	function refreshBalance() {
-		if (balances !== undefined) {
-			let balance = getBalance(collection.token);
+  function refreshBalance() {
+    if (balances !== undefined) {
+      let balance = getBalance(collection.token);
 
-			setBalance(balance);
-		}
-	}
+      setBalance(balance);
+    }
+  }
 
-	return (
-		<div className={styles.container}>
-			<Token token={collection.token}/>
+  return (
+    <div className={styles.container}>
+      <Token token={collection.token} />
 
-			<hr/>
+      <hr />
 
-			<div className={styles.balance_container}>Your Balance: <BalanceTooltip balance={balance}/></div>
+      <div className={styles.balance_container}>
+        Your Balance: <BalanceTooltip balance={balance} />
+      </div>
 
-			<div className={styles.link_container}>
-				<InternalLink link={"/peridot-swap?chain=" + collection.chain.nameId + "&name=" + collection.name + "&input=token"} isButton={true}>Peridot-Swap</InternalLink>
-			</div>
-		</div>
-	);
+      <div className={styles.link_container}>
+        <InternalLink
+          link={
+            "/peridot-swap?chain=" +
+            collection.chain.nameId +
+            "&name=" +
+            collection.name +
+            "&input=token"
+          }
+          isButton={true}
+        >
+          Peridot-Swap
+        </InternalLink>
+      </div>
+    </div>
+  );
 }

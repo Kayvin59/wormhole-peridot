@@ -3,11 +3,11 @@ import Main from "../../structure/Main.js";
 import Inventory from "./Inventory.js";
 
 export default function InventoryContainer() {
-	return (
-		<Main>
-			<BalancesProvider>
-				<Inventory/>
-			</BalancesProvider>
-		</Main>
-	);
+  return (
+    <Main>
+      <BalancesProvider>
+        <Inventory />
+      </BalancesProvider>
+    </Main>
+  );
 }

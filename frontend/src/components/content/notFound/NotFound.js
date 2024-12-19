@@ -4,13 +4,15 @@ import SectionContainer from "../../structure/SectionContainer.js";
 import Section from "../../structure/Section.js";
 
 export default function NotFound() {
-	return (
-		<SectionContainer>
-			<Section title={"Site Not Found"}>
-				<div className={styles.container}>
-					<InternalLink link={"/"} isButton={true}>Return to Landing Page</InternalLink>
-				</div>
-			</Section>
-		</SectionContainer>
-	);
+  return (
+    <SectionContainer>
+      <Section title={"Site Not Found"}>
+        <div className={styles.container}>
+          <InternalLink link={"/"} isButton={true}>
+            Return to Landing Page
+          </InternalLink>
+        </div>
+      </Section>
+    </SectionContainer>
+  );
 }

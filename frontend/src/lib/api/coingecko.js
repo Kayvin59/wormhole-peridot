@@ -6,35 +6,35 @@ import { getPoolById } from "../../data/pools.js";
 const baseUrl = "https://api.coingecko.com/api/v3";
 
 export async function getTokenPrices() {
-	let tokens = getAllTokens();
-	let coingeckoIds = tokens.map(token => token.coingeckoId);
-	let filtered = coingeckoIds.filter(id => (id !== "") && (id !== "token-x"));
+  let tokens = getAllTokens();
+  let coingeckoIds = tokens.map((token) => token.coingeckoId);
+  let filtered = coingeckoIds.filter((id) => id !== "" && id !== "token-x");
 
-	let unique = [...new Set(filtered)];
-	let ids = unique.join("%2C");
+  let unique = [...new Set(filtered)];
+  let ids = unique.join("%2C");
 
-	let url = baseUrl + "/simple/price/?vs_currencies=usd&ids=" + ids;
-	let response = await fetch(url);
-	let json = await response.json();
+  let url = baseUrl + "/simple/price/?vs_currencies=usd&ids=" + ids;
+  let response = await fetch(url);
+  let json = await response.json();
 
-	let prices = {};
-	for (const key in json) {
-		prices[key] = json[key].usd;
-	}
+  let prices = {};
+  for (const key in json) {
+    prices[key] = json[key].usd;
+  }
 
-	// let tokenXPricePool = getPoolById("BSC", 1);
-	// let tokenXPrice = await getPriceByPool(tokenXPricePool);
-	// prices["token-x"] = tokenXPrice;
+  // let tokenXPricePool = getPoolById("BSC", 1);
+  // let tokenXPrice = await getPriceByPool(tokenXPricePool);
+  // prices["token-x"] = tokenXPrice;
 
-	return prices;
+  return prices;
 }
 
 export async function getPriceByPool(pool) {
-	let tokenABalanceWei = await getBalance(pool.tokenA, pool.lpToken.contract);
-	let tokenBBalanceWei = await getBalance(pool.tokenB, pool.lpToken.contract);
+  let tokenABalanceWei = await getBalance(pool.tokenA, pool.lpToken.contract);
+  let tokenBBalanceWei = await getBalance(pool.tokenB, pool.lpToken.contract);
 
-	let tokenABalance = fromWei(tokenABalanceWei);
-	let tokenBBalance = fromWei(tokenBBalanceWei);
+  let tokenABalance = fromWei(tokenABalanceWei);
+  let tokenBBalance = fromWei(tokenBBalanceWei);
 
-	return tokenBBalance / tokenABalance;
+  return tokenBBalance / tokenABalance;
 }

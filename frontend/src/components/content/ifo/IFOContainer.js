@@ -3,11 +3,11 @@ import Main from "../../structure/Main.js";
 import IFO from "./IFO.js";
 
 export default function IFOContainer() {
-	return (
-		<Main>
-			<BalancesProvider>
-				<IFO/>
-			</BalancesProvider>
-		</Main>
-	);
+  return (
+    <Main>
+      <BalancesProvider>
+        <IFO />
+      </BalancesProvider>
+    </Main>
+  );
 }

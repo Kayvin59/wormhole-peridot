@@ -3,51 +3,50 @@
 // ---- CONTAINER ----
 
 .container {
-
 }
 
 // ---- WORMHOLE CONTAINER ----
 
 .wormhole_container {
-	@include mixins.box;
+  @include mixins.box;
 
-	> div > div {
-		margin: 0px;
-	}
+  > div > div {
+    margin: 0px;
+  }
 }
 
 // ---- BRIDGE CONTAINER ----
 
 .bridge_container {
-	@include mixins.box;
+  @include mixins.box;
 
-	display: flex;
-	flex-direction: column;
-	gap: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .info_container {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	gap: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .info_chain_image {
-	width: 40px;
-	height: 40px;
+  width: 40px;
+  height: 40px;
 }
 
 .bridge_modal_container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	gap: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
 
-	font-size: 14px;
+  font-size: 14px;
 
-	> :last-child {
-		color: var(--color-4);
-	}
+  > :last-child {
+    color: var(--color-4);
+  }
 }
