@@ -5,6 +5,9 @@
 # dependencies
 /node_modules
 
+# next.js
+/.next
+
 # production
 /build
 /nginx_build
@@ -13,3 +16,7 @@
 
 # env
 .env
+.env.local
+
+# typescript
+next-env.d.ts
