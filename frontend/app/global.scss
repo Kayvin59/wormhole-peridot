@@ -84,8 +84,8 @@
 	--opacity-low: 0.4;
 	--opacity-high: 0.8;
 
-	--title-font: Poppins Regular;
-	--text-font: Roboto Regular;
+	--title-font: var(--font-poppins);
+	--text-font: var(--font-roboto);
 
 	--landing-element-color-1: var(--color-1);
 	--landing-element-color-hover: var(--color-3);
