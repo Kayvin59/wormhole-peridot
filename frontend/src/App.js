@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.scss";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoadingSpinnerPage from "./components/common/loading/LoadingSpinnerPage.js";
 
 const LandingContainer = lazy(() => import("./components/content/landing/LandingContainer.js"));

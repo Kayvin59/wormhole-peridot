@@ -35,6 +35,13 @@
 	"resolutions": {
 		"react-error-overlay": "6.0.9"
 	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"next-env.d.ts",
+		".next/types/**/*.ts"
+	],
+	"exclude": ["node_modules"],
 	"eslintConfig": {
 		"extends": [
 			"react-app"
