@@ -1,0 +1,47 @@
+{
+    // Base configuration for JavaScript files
+    "extends": [
+      "next/core-web-vitals", // Next.js core web vitals plugin to avoid build warnings
+      "plugin:prettier/recommended" // Integrates Prettier with ESLint
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": false, // Use single quotes instead of double quotes
+          "endOfLine": "auto", // Maintain consistent end of line behavior across environments
+          "semi": false // Omit semicolons at the end of statements
+        }
+      ] // Prevent conflicts between Prettier and ESLint rules
+    },
+    "overrides": [
+      {
+        // Configuration specifically for TypeScript files
+        "files": ["**/*.ts", "**/*.tsx", "**/*.mts"], // Applies these rules only to TypeScript files
+        "plugins": [
+          "@typescript-eslint", // TypeScript specific linting rules
+          "unused-imports", // Plugin to automatically remove unused imports
+          "simple-import-sort" // Plugin to enforce consistent import order
+        ],
+        "extends": [
+          "next/core-web-vitals", // Next.js core web vitals plugin
+          "plugin:prettier/recommended" // Integrates Prettier with ESLint
+        ],
+        "parser": "@typescript-eslint/parser", // Uses TypeScript parser for ESLint
+        "parserOptions": {
+          "project": "./tsconfig.json" // Ensures TypeScript is linted according to the project's tsconfig.json
+        },
+        "rules": {
+          "prettier/prettier": [
+            "error",
+            {
+              "singleQuote": false, // Use double quotes for TypeScript files
+              "endOfLine": "auto", // Maintain consistent end of line behavior across environments
+              "semi": false, // Omit semicolons at the end of statements
+              "trailingComma": "es5" // Include trailing commas where valid in ES5
+            }
+          ]
+        }
+      }
+    ]
+  }
