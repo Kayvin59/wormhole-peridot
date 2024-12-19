@@ -1,22 +1,7 @@
+@use "./styles/animations";
+@use "./styles/mixins";
 @use "./styles/variables";
 
-// ---- FONTS ----
-
-@font-face {
-	font-family: "Poppins Regular";
-	font-style: normal;
-	font-weight: normal;
-	font-display: swap;
-	src: local("Poppins Regular"), url("./fonts/Poppins-Regular.ttf") format("woff");
-}
-
-@font-face {
-	font-family: "Roboto Regular";
-	font-style: normal;
-	font-weight: normal;
-	font-display: swap;
-	src: local("Roboto Regular"), url("./fonts/Roboto-Regular.ttf") format("woff");
-}
 
 // ---- VARIABLES ----
 
