@@ -1,16 +1,10 @@
-'use client'
-
 import { poppins, roboto } from "@/app/font";
-import { usePathname } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
-import './globals.scss';
-/* import CookieForm from '@/components/common/others/CookieForm';
-import { ConnectionProvider } from '@/components-helper/contexts/ConnectionProvider';
-import { WindowWidthProvider } from '@/components-helper/contexts/WindowWidthProvider';
-import Header from '@/components/header/Header';
-import Footer from '@/components/Footer';
-import { scrollToAnchor } from '@/lib/wrapper/html'; */
+import '@/app/global.scss';
 import LoadingSpinnerPage from '@/components/common/loading/LoadingSpinnerPage';
+import { ScrollToAnchor } from '@/components/scrollToAnchor';
+import Header from '@/components/structure/header/Header';
+import { Suspense } from "react";
+// import Providers from '@/components/Providers';
 
 export const metadata = {
   title: "Peridot",
@@ -22,35 +16,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const scrollDelay = 1500;
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      scrollToAnchor();
-    }, scrollDelay);
-  
-    return () => clearTimeout(timeoutId);
-  }, [pathname]);
-
   return (
     <html lang="en" className={`${poppins.variable} ${roboto.variable}`}>
       <body>
-        {/* <ConnectionProvider>
-          <WindowWidthProvider> */}
-            <Header/>
-            
-            <main>
-              <Suspense fallback={<LoadingSpinnerPage />}>
-                {children}
-              </Suspense>
-            </main>
-
-            <CookieForm/>
-
-            <Footer/>
-          {/* </WindowWidthProvider>
-        </ConnectionProvider> */}
+        {/* <Providers> */}
+          <ScrollToAnchor />
+          <Header/>
+          <main>
+          <Suspense fallback={<LoadingSpinnerPage />}>
+            {children}
+          </Suspense>
+          </main>
+          {/* <CookieForm />
+        </Providers> */}
       </body>
     </html>
   );
