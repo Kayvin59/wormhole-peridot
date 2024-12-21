@@ -1,6 +1,7 @@
 import { poppins, roboto } from "@/app/font";
 import '@/app/global.scss';
 import LoadingSpinnerPage from '@/components/common/loading/LoadingSpinnerPage';
+import CookieForm from "@/components/common/others/CookieForm";
 import { ScrollToAnchor } from '@/components/scrollToAnchor';
 import Header from '@/components/structure/header/Header';
 import { Suspense } from "react";
@@ -23,11 +24,14 @@ export default function RootLayout({
           <ScrollToAnchor />
           <Header/>
           <main>
-          <Suspense fallback={<LoadingSpinnerPage />}>
-            {children}
-          </Suspense>
+            <Suspense fallback={<LoadingSpinnerPage />}>
+              {children}
+            </Suspense>
           </main>
-          {/* <CookieForm />
+          <span>cookie</span>
+          <CookieForm />
+          <span>cookie</span>
+          {/* 
         </Providers> */}
       </body>
     </html>
