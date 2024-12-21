@@ -2,7 +2,7 @@
 
 import styles from "@/components/common/loading/LoadingSpinnerPage.module.scss";
 import { getCssVariableColor } from "@/lib/wrapper/html.js";
-import RevolvingDot from "react-loader-spinner";
+import { RevolvingDot } from "react-loader-spinner";
 
 
 export default function LoadingSpinnerPage() {
