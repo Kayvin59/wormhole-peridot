@@ -186,3 +186,25 @@ main {
     margin-top: var(--top-margin);
   }
 }
+
+// ---- Link ----
+
+.link {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: var(--transition-short);
+
+  &:hover {
+    color: var(--link-highlight-color);
+  }
+}
+
+
+// ---- NOt found ----
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
