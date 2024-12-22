@@ -3,15 +3,11 @@
 import styles from "./Header.module.scss";
 
 export default function Header() {
-    return (
+  return (
     <header className={styles.header}>
-        <div className={styles.logo_container}>
+      <div className={styles.logo_container}></div>
 
-        </div>
-
-        <nav className={styles.nav_desktop}>
-
-        </nav>
+      <nav className={styles.nav_desktop}></nav>
     </header>
-    );
+  );
 }

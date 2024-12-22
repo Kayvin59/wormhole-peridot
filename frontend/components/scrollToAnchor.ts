@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export function ScrollToAnchor() {
   const pathname = usePathname();
@@ -25,4 +25,3 @@ export function ScrollToAnchor() {
 
   return null;
 }
-

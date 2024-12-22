@@ -1,7 +1,6 @@
 @use "./../../../app/styles/animations";
 @use "./../../../app/styles/mixins";
 
-
 .container {
   @include mixins.middle;
 
