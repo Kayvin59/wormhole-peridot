@@ -1,6 +1,6 @@
 "use client";
 
-import RevolvingDot from "react-loader-spinner";
+import { RevolvingDot } from "react-loader-spinner";
 import styles from "./LoadingSpinnerPage.module.scss";
 
 export default function LoadingSpinnerPage() {
