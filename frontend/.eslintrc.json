@@ -10,7 +10,7 @@
       {
         "singleQuote": false, // Use single quotes instead of double quotes
         "endOfLine": "auto", // Maintain consistent end of line behavior across environments
-        "semi": false // Omit semicolons at the end of statements
+        "semi": true // Omit semicolons at the end of statements
       }
     ] // Prevent conflicts between Prettier and ESLint rules
   },
@@ -37,11 +37,12 @@
           {
             "singleQuote": false, // Use double quotes for TypeScript files
             "endOfLine": "auto", // Maintain consistent end of line behavior across environments
-            "semi": false, // Omit semicolons at the end of statements
+            "semi": true, // Omit semicolons at the end of statements
             "trailingComma": "es5" // Include trailing commas where valid in ES5
           }
         ]
       }
     }
-  ]
+  ],
+  "ignorePatterns": ["src/"] // Ignores the src directory
 }
