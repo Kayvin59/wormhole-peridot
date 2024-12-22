@@ -1,18 +1,14 @@
 "use client";
 
-import styles from "@/components/common/loading/LoadingSpinnerPage.module.scss";
-import { getCssVariableColor } from "@/lib/wrapper/html.js";
-import { RevolvingDot } from "react-loader-spinner";
-
+import RevolvingDot from "react-loader-spinner";
+import styles from "./LoadingSpinnerPage.module.scss";
 
 export default function LoadingSpinnerPage() {
-  const color = getCssVariableColor("--color-4");
-  const projectName = "Peridot";
-
   return (
     <div className={styles.container}>
-      <RevolvingDot color={color} />
-      <div className={styles.title}>{projectName}</div>
+      <RevolvingDot color="var(--color-4)" />
+      <div className={styles.title}>Peridot</div>
     </div>
   );
 }
+
